@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
   <meta name="keywords" content="CodeSmart NG, software training, web development, programming, Nigeria, Hausa programming, coding bootcamp, tech training">
   <meta name="author" content="CodeSmart NG">
   
-  <!-- Open Graph Tags for Social Media -->
+  <!-- Open Graph Tags -->
   <meta property="og:title" content="CodeSmart NG | Software Development & Training">
   <meta property="og:description" content="Learn coding in Hausa & English. Professional software training with job placement support.">
   <meta property="og:image" content="https://codesmartng.github.io/software-training/images/og-image.jpg">
@@ -20,13 +20,21 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="   https://codesmartng.github.io/software-training/ " rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <!-- CSS File -->
+  <!-- CSS Files -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
 </head>
 <body>
+  <!-- ================= LIVE CLASS STATUS ================= -->
+  <div class="live-status">
+    <span class="live-dot"></span>
+    <span>Live Class in Progress: </span>
+    <strong>Frontend Development</strong>
+    <a href="#" class="join-live">Join Now →</a>
+  </div>
+
   <!-- ================= NAVBAR ================= -->
   <nav class="navbar">
     <div class="container nav-container">
@@ -39,6 +47,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#training">Training</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#training" class="nav-cta">Enroll Now</a></li>
@@ -51,12 +60,55 @@
     <div class="container hero-content">
       <h1>CodeSmart <span>NG</span></h1>
       <p>Transform Your Career with Professional Software Training in Hausa & English</p>
+      
+      <!-- Live Counter -->
+      <div class="live-counter">
+        <div class="counter-item">
+          <i class="fas fa-graduation-cap"></i>
+          <div>
+            <span class="counter" data-target="500">0</span>
+            <p>Students Trained</p>
+          </div>
+        </div>
+        <div class="counter-item">
+          <i class="fas fa-briefcase"></i>
+          <div>
+            <span class="counter" data-target="85">0</span>
+            <p>Job Placement Rate</p>
+          </div>
+        </div>
+        <div class="counter-item">
+          <i class="fas fa-star"></i>
+          <div>
+            <span class="counter" data-target="4.9">0</span>
+            <p>Average Rating</p>
+          </div>
+        </div>
+      </div>
+      
       <div class="hero-buttons">
         <a href="#training" class="btn">View Courses</a>
         <a href="#contact" class="btn btn-secondary">Free Consultation</a>
       </div>
     </div>
   </section>
+
+  <!-- ================= QUIZ WIDGET ================= -->
+  <div class="quiz-widget">
+    <button class="quiz-toggle" onclick="toggleQuiz()">
+      <i class="fas fa-brain"></i> Free Skill Assessment
+    </button>
+    <div class="quiz-container" id="quizContainer">
+      <h3>Discover Your Ideal Tech Path</h3>
+      <div class="quiz-question">
+        <p>What interests you more?</p>
+        <button class="quiz-option" data-points="frontend">Designing beautiful interfaces</button>
+        <button class="quiz-option" data-points="backend">Building systems and logic</button>
+        <button class="quiz-option" data-points="fullstack">Both - I want to do everything!</button>
+      </div>
+      <div class="quiz-result hidden" id="quizResult"></div>
+    </div>
+  </div>
 
   <!-- ================= ABOUT ================= -->
   <section class="section about-section" id="about">
@@ -74,6 +126,30 @@
             We provide quality education in both Hausa and English, making technology 
             accessible to everyone regardless of language barriers.
           </p>
+          
+          <!-- Job Placement Statistics -->
+          <div class="placement-stats">
+            <h3>Our Placement Success</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div class="stat-number" data-target="92">0</div>
+                <div class="stat-label">Employment Rate</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" data-target="45">0</div>
+                <div class="stat-label">Partner Companies</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" data-target="12">0</div>
+                <div class="stat-label">Avg Salary (₦k)</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number" data-target="30">0</div>
+                <div class="stat-label">Days to Hire</div>
+              </div>
+            </div>
+          </div>
+          
           <div class="about-features">
             <div class="feature">
               <div class="feature-icon">
@@ -309,10 +385,185 @@
     </div>
   </section>
 
+  <!-- ================= CLASS SCHEDULE ================= -->
+  <section class="section schedule-section" id="schedule">
+    <div class="container">
+      <h2 class="section-title">Class Schedule</h2>
+      <div class="schedule-toggle">
+        <button class="schedule-btn active" data-type="upcoming">Upcoming Batches</button>
+        <button class="schedule-btn" data-type="ongoing">Ongoing Classes</button>
+      </div>
+      
+      <div class="schedule-container">
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <span class="date-day">15</span>
+            <span class="date-month">Jan</span>
+          </div>
+          <div class="schedule-info">
+            <h3>Frontend Development</h3>
+            <p><i class="far fa-clock"></i> 10:00 AM - 1:00 PM (Mon, Wed, Fri)</p>
+            <p><i class="fas fa-user"></i> Instructor: Musa Ahmed</p>
+            <p><i class="fas fa-video"></i> Mode: Online (Live)</p>
+            <span class="seats-badge">10 Seats Left</span>
+          </div>
+          <button class="btn-small" onclick="enroll('Frontend Development - Jan 15 Batch')">Join Now</button>
+        </div>
+        
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <span class="date-day">20</span>
+            <span class="date-month">Jan</span>
+          </div>
+          <div class="schedule-info">
+            <h3>Backend Development</h3>
+            <p><i class="far fa-clock"></i> 2:00 PM - 5:00 PM (Tue, Thu)</p>
+            <p><i class="fas fa-user"></i> Instructor: Aisha Bello</p>
+            <p><i class="fas fa-video"></i> Mode: Hybrid</p>
+            <span class="seats-badge">5 Seats Left</span>
+          </div>
+          <button class="btn-small" onclick="enroll('Backend Development - Jan 20 Batch')">Join Now</button>
+        </div>
+        
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <span class="date-day">25</span>
+            <span class="date-month">Jan</span>
+          </div>
+          <div class="schedule-info">
+            <h3>Computer Basics</h3>
+            <p><i class="far fa-clock"></i> 9:00 AM - 12:00 PM (Weekdays)</p>
+            <p><i class="fas fa-user"></i> Instructor: Fatima Yusuf</p>
+            <p><i class="fas fa-home"></i> Mode: In-Person</p>
+            <span class="seats-badge">15 Seats Left</span>
+          </div>
+          <button class="btn-small" onclick="enroll('Computer Basics - Jan 25 Batch')">Join Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CERTIFICATE SECTION ================= -->
+  <section class="section certificate-section">
+    <div class="container">
+      <h2 class="section-title">Get Certified</h2>
+      <div class="certificate-container">
+        <div class="certificate-preview">
+          <img src="https://images.unsplash.com/photo-1589256469067-ea99122bbdc4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Certificate Sample">
+        </div>
+        <div class="certificate-info">
+          <h3>Industry-Recognized Certificate</h3>
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Verified digital certificate</li>
+            <li><i class="fas fa-check-circle"></i> LinkedIn profile badge</li>
+            <li><i class="fas fa-check-circle"></i> Employer verification</li>
+            <li><i class="fas fa-check-circle"></i> Lifetime access</li>
+            <li><i class="fas fa-check-circle"></i> International recognition</li>
+          </ul>
+          <button class="btn" onclick="viewCertificate()">View Sample Certificate</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STUDENT PORTFOLIO ================= -->
+  <section class="section portfolio-section" id="portfolio">
+    <div class="container">
+      <h2 class="section-title">Student Projects</h2>
+      <p class="section-desc">See what our students have built during training</p>
+      
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="E-commerce Website">
+          <div class="portfolio-overlay">
+            <h3>E-commerce Store</h3>
+            <p>Built by: Aisha Abdullahi</p>
+            <a href="#" class="btn-small">View Live</a>
+          </div>
+        </div>
+        
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="School Management System">
+          <div class="portfolio-overlay">
+            <h3>School Management System</h3>
+            <p>Built by: Musa Ibrahim</p>
+            <a href="#" class="btn-small">View Live</a>
+          </div>
+        </div>
+        
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Finance Dashboard">
+          <div class="portfolio-overlay">
+            <h3>Finance Dashboard</h3>
+            <p>Built by: Halima Sani</p>
+            <a href="#" class="btn-small">View Live</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FREE RESOURCES ================= -->
+  <section class="section resources-section">
+    <div class="container">
+      <h2 class="section-title">Free Learning Resources</h2>
+      <div class="resources-grid">
+        <a href="#" class="resource-card">
+          <i class="fas fa-book"></i>
+          <h4>Beginner's Guide to HTML</h4>
+          <p>Free PDF download</p>
+          <span class="resource-badge">Free</span>
+        </a>
+        <a href="#" class="resource-card">
+          <i class="fas fa-video"></i>
+          <h4>JavaScript Crash Course</h4>
+          <p>2-hour video tutorial</p>
+          <span class="resource-badge">Free</span>
+        </a>
+        <a href="#" class="resource-card">
+          <i class="fas fa-code"></i>
+          <h4>Coding Challenges</h4>
+          <p>Practice exercises</p>
+          <span class="resource-badge">Free</span>
+        </a>
+        <a href="#" class="resource-card">
+          <i class="fas fa-file-code"></i>
+          <h4>Project Templates</h4>
+          <p>Starter code for projects</p>
+          <span class="resource-badge">Free</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= TESTIMONIALS ================= -->
   <section class="section testimonials-section" id="testimonials">
     <div class="container">
       <h2 class="section-title">Student Success Stories</h2>
+      
+      <!-- Video Testimonials -->
+      <div class="video-testimonials">
+        <div class="video-container">
+          <div class="video-player">
+            <div class="video-placeholder" onclick="playVideo('video1')">
+              <i class="fas fa-play"></i>
+              <p>Watch student success story</p>
+            </div>
+          </div>
+          <div class="video-thumbnails">
+            <div class="thumb active" onclick="playVideo('video1')">
+              <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Video 1">
+            </div>
+            <div class="thumb" onclick="playVideo('video2')">
+              <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Video 2">
+            </div>
+            <div class="thumb" onclick="playVideo('video3')">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Video 3">
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <div class="testimonial-content">
@@ -358,6 +609,54 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= WEBINAR BANNER ================= -->
+  <div class="webinar-banner">
+    <h3>🎓 FREE Virtual Open Day</h3>
+    <p>Join our live webinar: "How to Start Your Tech Career in 2025"</p>
+    <div class="webinar-details">
+      <p><i class="far fa-calendar"></i> Saturday, January 25, 2025</p>
+      <p><i class="far fa-clock"></i> 2:00 PM - 4:00 PM WAT</p>
+      <p><i class="fas fa-users"></i> Limited to 100 participants</p>
+    </div>
+    <button class="btn" onclick="registerWebinar()">Reserve Your Spot</button>
+  </div>
+
+  <!-- ================= PARTNERS ================= -->
+  <section class="section partners-section">
+    <div class="container">
+      <h2 class="section-title">Trusted By</h2>
+      <div class="partners-slider">
+        <div class="partner-logo"><img src="https://via.placeholder.com/150x80/2563eb/ffffff?text=Tech+Company" alt="Partner 1"></div>
+        <div class="partner-logo"><img src="https://via.placeholder.com/150x80/7c3aed/ffffff?text=Startup+NG" alt="Partner 2"></div>
+        <div class="partner-logo"><img src="https://via.placeholder.com/150x80/f59e0b/ffffff?text=Digital+Agency" alt="Partner 3"></div>
+        <div class="partner-logo"><img src="https://via.placeholder.com/150x80/10b981/ffffff?text=EduTech" alt="Partner 4"></div>
+        <div class="partner-logo"><img src="https://via.placeholder.com/150x80/ef4444/ffffff?text=Software+Firm" alt="Partner 5"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MOBILE APP ================= -->
+  <div class="app-download">
+    <h3>Learn on the Go!</h3>
+    <p>Download our mobile app for course materials, assignments, and notifications</p>
+    <div class="app-buttons">
+      <a href="#" class="app-btn google-play">
+        <i class="fab fa-google-play"></i>
+        <div>
+          <span>GET IT ON</span>
+          <strong>Google Play</strong>
+        </div>
+      </a>
+      <a href="#" class="app-btn app-store">
+        <i class="fab fa-apple"></i>
+        <div>
+          <span>Download on the</span>
+          <strong>App Store</strong>
+        </div>
+      </a>
+    </div>
+  </div>
 
   <!-- ================= CONTACT ================= -->
   <section class="section contact-section" id="contact">
@@ -438,6 +737,7 @@
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
             <a href="https://wa.me/2348160932630"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
         
@@ -448,6 +748,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#training">Training</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
@@ -485,108 +786,6 @@
 
   <!-- ================= SCRIPTS ================= -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script>
-    const phone = "2348160932630";
-
-    function enroll(course) {
-      const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
-      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-    }
-
-    // Language Toggle
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const lang = this.getAttribute('data-lang');
-        
-        // Update active button
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Toggle language content
-        document.querySelectorAll('.en').forEach(el => {
-          el.classList.toggle('hidden', lang !== 'en');
-        });
-        document.querySelectorAll('.ha').forEach(el => {
-          el.classList.toggle('hidden', lang !== 'ha');
-        });
-      });
-    });
-
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.getElementById('navLinks');
-    
-    mobileMenuBtn.addEventListener('click', function() {
-      navLinks.classList.toggle('active');
-      this.innerHTML = navLinks.classList.contains('active') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-    });
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if(targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if(targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-          
-          // Close mobile menu if open
-          if(navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-          }
-        }
-      });
-    });
-
-    // Paystack Payment Function
-    function payWithPaystack(amount, course) {
-      const email = prompt("Please enter your email address for payment receipt:");
-      if (!email) return;
-      
-      let handler = PaystackPop.setup({
-        key: 'pk_test_xxxxxxxxxxxxx', // Replace with your Paystack public key
-        email: email,
-        amount: amount * 100,
-        currency: "NGN",
-        metadata: { 
-          course: course,
-          customer_name: prompt("Enter your full name:")
-        },
-        callback: function(response){
-          alert(`Payment successful! Transaction reference: ${response.reference}`);
-          // Redirect to registration page or show success message
-          window.location.href = `register.html?course=${encodeURIComponent(course)}&ref=${response.reference}`;
-        },
-        onClose: function(){
-          alert('Payment window closed.');
-        }
-      });
-      handler.openIframe();
-    }
-
-    // Newsletter Form Submission
-    document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = this.querySelector('input[type="email"]').value;
-      alert(`Thank you for subscribing with ${email}! We'll keep you updated.`);
-      this.reset();
-    });
-
-    // Form submission feedback
-    document.querySelector('.contact-form')?.addEventListener('submit', function() {
-      setTimeout(() => {
-        alert('Thank you for your message! We will get back to you within 24 hours.');
-      }, 100);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
-
