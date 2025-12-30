@@ -1,277 +1,270 @@
-
-.lang-toggle {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.lang-toggle button {
-  padding: 8px 15px;
-  margin: 5px;
-  border: none;
-  background: #0f172a;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.section-desc {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 40px;
-  color: #555;
-}
-
-.training-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 25px;
-}
-
-.training-card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.training-card ul {
-  list-style: none;
-  margin-bottom: 15px;
-}
-
-.training-card ul li {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.outline-btn {
-  display: inline-block;
-  margin-bottom: 10px;
-  color: #0f172a;
-  text-decoration: underline;
-  font-size: 14px;
-}
-
-.btn-small {
-  padding: 10px 20px;
-  background: #22c55e;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
-}
-
-
+/* ================= RESET ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 body {
-  color: #333;
+  background: #f7f9fc;
+  color: #222;
+  line-height: 1.6;
 }
 
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
+  background: #0b1c2d;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
-  background: #0f172a;
-}
-
-.logo {
-  height: 45px;
+  padding: 12px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .navbar ul {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 25px;
 }
 
 .navbar a {
   color: #fff;
   text-decoration: none;
+  font-weight: 500;
 }
 
-/* Hero */
+.navbar a:hover {
+  color: #00d084;
+}
+
+.logo {
+  height: 42px;
+}
+
+/* ================= HERO ================= */
 .hero {
-  height: 90vh;
-  background: linear-gradient(to right, #0f172a, #1e293b);
+  min-height: 85vh;
+  background: linear-gradient(135deg, #0b1c2d, #123b66);
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
 }
 
 .hero span {
-  color: #22c55e;
+  color: #00d084;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 1.2rem;
 }
 
 .btn {
   margin-top: 20px;
   padding: 12px 30px;
-  background: #22c55e;
-  color: #fff;
-  text-decoration: none;
+  background: #00d084;
+  color: #000;
   border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
-/* Sections */
+.btn:hover {
+  background: #00b070;
+}
+
+/* ================= SECTIONS ================= */
 .section {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: auto;
+  padding: 70px 40px;
+  text-align: center;
 }
 
 .section h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.section-desc {
+  max-width: 700px;
+  margin: auto;
+  color: #555;
 }
 
 .gray {
-  background: #f4f4f4;
+  background: #eef2f7;
 }
 
-/* Cards */
-.cards {
+/* ================= CARDS ================= */
+.cards,
+.training-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
 }
 
-.card {
+.card,
+.training-card {
   background: #fff;
   padding: 25px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: 0.3s;
 }
 
-/* Training List */
-.list {
-  max-width: 500px;
-  margin: auto;
+.card:hover,
+.training-card:hover {
+  transform: translateY(-6px);
 }
 
-.list li {
-  margin-bottom: 10px;
+.training-card h3 {
+  margin-bottom: 8px;
+  color: #0b1c2d;
 }
 
-/* Contact Form */
+.training-card ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.training-card li {
+  margin: 6px 0;
+}
+
+/* ================= BUTTONS ================= */
+.btn-small,
+.outline-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 9px 16px;
+  background: #0b1c2d;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.btn-small:hover,
+.outline-btn:hover {
+  background: #123b66;
+}
+
+/* Paystack Button special */
+.btn-small.paystack {
+  background: #00d084;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-small.paystack:hover {
+  background: #00b070;
+}
+
+/* ================= LANGUAGE TOGGLE ================= */
+.lang-toggle {
+  margin-bottom: 20px;
+}
+
+.lang-toggle button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  margin: 0 5px;
+  cursor: pointer;
+  background: #0b1c2d;
+  color: #fff;
+}
+
+.lang-toggle button:hover {
+  background: #123b66;
+}
+
+/* ================= CONTACT ================= */
 .contact-form {
-  max-width: 500px;
+  max-width: 420px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
+  margin-top: 30px;
 }
 
 .contact-form input,
 .contact-form textarea {
   padding: 12px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-.contact-form textarea {
-  height: 120px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
 }
 
 .contact-form button {
   padding: 12px;
-  background: #22c55e;
-  color: #fff;
+  background: #00d084;
   border: none;
   border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 
-/* Footer */
+.contact-form button:hover {
+  background: #00b070;
+}
+
+/* ================= FOOTER ================= */
 footer {
-  background: #0f172a;
+  background: #0b1c2d;
   color: #fff;
   text-align: center;
   padding: 15px;
 }
 
-/* WhatsApp Floating Button */
+/* ================= WHATSAPP FLOAT ================= */
 .whatsapp-float {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
+  bottom: 22px;
+  right: 22px;
+  background: #25d366;
   color: #fff;
-  width: 55px;
-  height: 55px;
+  padding: 15px;
   border-radius: 50%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 55px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  font-size: 22px;
   text-decoration: none;
-  z-index: 1000;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
 
-.section-desc {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 40px;
-  color: #555;
+/* ================= HELPERS ================= */
+.hidden {
+  display: none;
 }
 
-/* Training Cards */
-.training-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 25px;
-}
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-.training-card {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-}
+  .hero h1 {
+    font-size: 2.2rem;
+  }
 
-.training-card h3 {
-  margin-bottom: 10px;
-  color: #0f172a;
-}
-
-.training-card p {
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.training-card ul {
-  list-style: none;
-  margin-bottom: 20px;
-}
-
-.training-card ul li {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-/* Small Button */
-.btn-small {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #22c55e;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
+  .section {
+    padding: 50px 20px;
+  }
 }
