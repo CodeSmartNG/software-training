@@ -1,1 +1,400 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - CodeSmart NG | Tech Tips & Tutorials</title>
+  <meta name="description" content="Learn coding tips, tutorials, and career advice from CodeSmart NG experts. Stay updated with latest tech trends in Nigeria.">
+  <meta name="keywords" content="coding blog, programming tutorials, tech Nigeria, web development tips, software training">
+  
+  <!-- Open Graph for Social Sharing -->
+  <meta property="og:title" content="CodeSmart NG Blog - Tech Education Resources">
+  <meta property="og:description" content="Free coding tutorials and career guidance in Hausa & English">
+  <meta property="og:image" content="https://codesmartng.github.io/software-training/images/blog-og.jpg">
+  <meta property="og:url" content="https://codesmartng.github.io/software-training/blog.html">
+  
+  <!-- Canonical URL for SEO -->
+  <link rel="canonical" href="https://codesmartng.github.io/software-training/blog.html">
+  
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "CodeSmart NG Blog",
+    "description": "Programming tutorials and tech career advice",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CodeSmart NG",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://codesmartng.github.io/software-training/logo.png"
+      }
+    }
+  }
+  </script>
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png">
+</head>
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html"><img src="logo.png" alt="CodeSmart NG Logo" class="logo"></a>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#training">Courses</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="index.html#portfolio">Portfolio</a></li>
+        <li><a href="index.html#testimonials">Testimonials</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#training" class="nav-cta">Enroll Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= BLOG HERO ================= -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="blog-hero-content">
+        <h1>CodeSmart NG Blog</h1>
+        <p>Tech tutorials, career advice, and coding insights in Hausa & English</p>
+        
+        <!-- Search Bar -->
+        <div class="blog-search">
+          <input type="text" id="searchInput" placeholder="Search articles...">
+          <button onclick="searchArticles()"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Categories -->
+        <div class="blog-categories">
+          <button class="category-btn active" data-category="all">All Topics</button>
+          <button class="category-btn" data-category="frontend">Frontend</button>
+          <button class="category-btn" data-category="backend">Backend</button>
+          <button class="category-btn" data-category="career">Career</button>
+          <button class="category-btn" data-category="tutorial">Tutorial</button>
+          <button class="category-btn" data-category="hausa">Hausa Content</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BLOG CONTENT ================= -->
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-layout">
+        <!-- Main Articles Column -->
+        <div class="blog-main">
+          <!-- Featured Article -->
+          <article class="blog-article featured" data-categories="frontend,hausa" data-id="1">
+            <div class="article-image">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="HTML CSS JavaScript Learning">
+              <span class="featured-badge">Featured</span>
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="category-badge frontend">Frontend</span>
+                <span class="category-badge hausa">Hausa</span>
+                <span class="date"><i class="far fa-calendar"></i> Jan 15, 2025</span>
+                <span class="read-time"><i class="far fa-clock"></i> 5 min read</span>
+              </div>
+              <h2><a href="blog-post-1.html">Yadda Zaka Fara Koyon HTML, CSS da JavaScript a Hausa</a></h2>
+              <p>Complete guide for Hausa speakers starting web development. Learn the basics with practical examples in your native language...</p>
+              <div class="article-footer">
+                <div class="author">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Musa Ahmed">
+                  <span>Musa Ahmed</span>
+                </div>
+                <a href="blog-post-1.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Regular Articles Grid -->
+          <div class="articles-grid">
+            <!-- Article 1 -->
+            <article class="blog-article" data-categories="frontend,tutorial" data-id="2">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="React Components">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge frontend">Frontend</span>
+                  <span class="date">Jan 10, 2025</span>
+                </div>
+                <h3><a href="blog-post-2.html">5 React Hooks Every Beginner Should Master</a></h3>
+                <p>Learn useState, useEffect, and other essential hooks with practical examples...</p>
+                <div class="article-footer">
+                  <span>4 min read</span>
+                  <a href="blog-post-2.html">Read →</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="blog-article" data-categories="backend,tutorial" data-id="3">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Node.js API">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge backend">Backend</span>
+                  <span class="date">Jan 5, 2025</span>
+                </div>
+                <h3><a href="blog-post-3.html">Building Your First REST API with Node.js</a></h3>
+                <p>Step-by-step guide to creating a complete API with Express and MongoDB...</p>
+                <div class="article-footer">
+                  <span>7 min read</span>
+                  <a href="blog-post-3.html">Read →</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="blog-article" data-categories="career" data-id="4">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Tech Interview">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge career">Career</span>
+                  <span class="date">Dec 28, 2024</span>
+                </div>
+                <h3><a href="blog-post-4.html">How to Prepare for Your First Tech Interview in Nigeria</a></h3>
+                <p>Common questions, portfolio tips, and salary negotiation advice for Nigerian developers...</p>
+                <div class="article-footer">
+                  <span>6 min read</span>
+                  <a href="blog-post-4.html">Read →</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Article 4 -->
+            <article class="blog-article" data-categories="frontend,tutorial,hausa" data-id="5">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="CSS Grid">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge frontend">Frontend</span>
+                  <span class="category-badge hausa">Hausa</span>
+                  <span class="date">Dec 20, 2024</span>
+                </div>
+                <h3><a href="blog-post-5.html">CSS Grid vs Flexbox: Wanne Yafi Amfani?</a></h3>
+                <p>Comparative guide in Hausa explaining when to use Grid or Flexbox for your layouts...</p>
+                <div class="article-footer">
+                  <span>5 min read</span>
+                  <a href="blog-post-5.html">Read →</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Article 5 -->
+            <article class="blog-article" data-categories="backend" data-id="6">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Python Programming">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge backend">Backend</span>
+                  <span class="date">Dec 15, 2024</span>
+                </div>
+                <h3><a href="blog-post-6.html">Python for Web Development: Django vs Flask</a></h3>
+                <p>Choosing the right Python framework for your next project...</p>
+                <div class="article-footer">
+                  <span>8 min read</span>
+                  <a href="blog-post-6.html">Read →</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Article 6 -->
+            <article class="blog-article" data-categories="career" data-id="7">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Freelancing">
+              </div>
+              <div class="article-content">
+                <div class="article-meta">
+                  <span class="category-badge career">Career</span>
+                  <span class="date">Dec 10, 2024</span>
+                </div>
+                <h3><a href="blog-post-7.html">Freelancing as a Developer in Nigeria: Getting Your First Client</a></h3>
+                <p>Platforms, pricing, and proposals that work in the Nigerian market...</p>
+                <div class="article-footer">
+                  <span>9 min read</span>
+                  <a href="blog-post-7.html">Read →</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Pagination -->
+          <div class="blog-pagination">
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <span>...</span>
+            <button class="pagination-btn">10</button>
+            <button class="pagination-btn next">Next <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <!-- Newsletter Signup -->
+          <div class="sidebar-widget">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Get weekly coding tips and course updates</p>
+            <form class="newsletter-form" id="blogNewsletter">
+              <input type="email" placeholder="Your email address" required>
+              <button type="submit">Subscribe</button>
+            </form>
+            <p class="small-text">No spam. Unsubscribe anytime.</p>
+          </div>
+
+          <!-- Popular Posts -->
+          <div class="sidebar-widget">
+            <h3>Popular Articles</h3>
+            <div class="popular-posts">
+              <a href="blog-post-1.html" class="popular-post">
+                <span class="popular-rank">1</span>
+                <div>
+                  <h4>Yadda Zaka Fara Koyon HTML, CSS da JavaScript a Hausa</h4>
+                  <span>1.2k views</span>
+                </div>
+              </a>
+              <a href="blog-post-4.html" class="popular-post">
+                <span class="popular-rank">2</span>
+                <div>
+                  <h4>How to Prepare for Your First Tech Interview</h4>
+                  <span>980 views</span>
+                </div>
+              </a>
+              <a href="blog-post-2.html" class="popular-post">
+                <span class="popular-rank">3</span>
+                <div>
+                  <h4>5 React Hooks Every Beginner Should Master</h4>
+                  <span>850 views</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Categories Widget -->
+          <div class="sidebar-widget">
+            <h3>Categories</h3>
+            <div class="category-list">
+              <a href="?category=frontend">Frontend Development <span>12</span></a>
+              <a href="?category=backend">Backend Development <span>8</span></a>
+              <a href="?category=career">Career Advice <span>15</span></a>
+              <a href="?category=tutorial">Tutorials <span>25</span></a>
+              <a href="?category=hausa">Hausa Content <span>18</span></a>
+              <a href="?category=news">Industry News <span>7</span></a>
+            </div>
+          </div>
+
+          <!-- Recent Comments -->
+          <div class="sidebar-widget">
+            <h3>Recent Comments</h3>
+            <div class="recent-comments">
+              <div class="comment">
+                <strong>Aisha:</strong> "This Hausa tutorial helped me so much!"
+                <span>on <a href="blog-post-1.html">Yadda Zaka Fara Koyon...</a></span>
+              </div>
+              <div class="comment">
+                <strong>Chinedu:</strong> "When is the next backend class?"
+                <span>on <a href="blog-post-3.html">Building Your First REST API...</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Widget -->
+          <div class="sidebar-widget cta-widget">
+            <h3>Ready to Start Coding?</h3>
+            <p>Join our next cohort and transform your career</p>
+            <a href="index.html#training" class="btn">View Courses</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMMENT SECTION ================= -->
+  <section class="comments-section">
+    <div class="container">
+      <h2>Discussion (24 Comments)</h2>
+      
+      <!-- Comment Form -->
+      <form class="comment-form" id="commentForm">
+        <h3>Leave a Comment</h3>
+        <div class="form-row">
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <textarea placeholder="Your comment..." rows="4" required></textarea>
+        <div class="form-row">
+          <div class="checkbox">
+            <input type="checkbox" id="notify">
+            <label for="notify">Notify me of replies</label>
+          </div>
+          <button type="submit">Post Comment</button>
+        </div>
+      </form>
+
+      <!-- Comments List -->
+      <div class="comments-list">
+        <!-- Comment 1 -->
+        <div class="comment-item">
+          <div class="comment-header">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Fatima">
+            <div>
+              <h4>Fatima Abdullahi</h4>
+              <span>2 days ago</span>
+            </div>
+          </div>
+          <p>Na gode sosai don wannan tutorial a Hausa! Ya sauƙaƙa mini fahimtar JavaScript. Ina son yadda kuka bayyana concepts da misalai na gaskiya.</p>
+          <div class="comment-actions">
+            <button><i class="far fa-thumbs-up"></i> 12</button>
+            <button><i class="far fa-thumbs-down"></i> 2</button>
+            <button class="reply-btn">Reply</button>
+          </div>
+        </div>
+
+        <!-- Comment 2 -->
+        <div class="comment-item">
+          <div class="comment-header">
+            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Emmanuel">
+            <div>
+              <h4>Emmanuel Okoro</h4>
+              <span>1 week ago</span>
+            </div>
+          </div>
+          <p>Great article! Do you have more advanced React tutorials coming soon? I've mastered the basics and want to learn about React performance optimization.</p>
+          <div class="comment-actions">
+            <button><i class="far fa-thumbs-up"></i> 8</button>
+            <button><i class="far fa-thumbs-down"></i> 0</button>
+            <button class="reply-btn">Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Same footer as index.html -->
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="blog.js"></script>
+</body>
+</html>
