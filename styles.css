@@ -1,3 +1,72 @@
+
+.lang-toggle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.lang-toggle button {
+  padding: 8px 15px;
+  margin: 5px;
+  border: none;
+  background: #0f172a;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.section-desc {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 40px;
+  color: #555;
+}
+
+.training-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+.training-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.training-card ul {
+  list-style: none;
+  margin-bottom: 15px;
+}
+
+.training-card ul li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.outline-btn {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #0f172a;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.btn-small {
+  padding: 10px 20px;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+
 * {
   margin: 0;
   padding: 0;
