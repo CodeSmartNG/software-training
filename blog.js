@@ -5,6 +5,23 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeBlogFeatures();
 });
 
+
+// Track article views
+function trackArticleView(articleId) {
+  const views = JSON.parse(localStorage.getItem('articleViews') || '{}');
+  views[articleId] = (views[articleId] || 0) + 1;
+  localStorage.setItem('articleViews', JSON.stringify(views));
+}
+
+// Track reading time
+function trackReadingTime(articleId, seconds) {
+  const readingTimes = JSON.parse(localStorage.getItem('readingTimes') || '{}');
+  readingTimes[articleId] = (readingTimes[articleId] || 0) + seconds;
+  localStorage.setItem('readingTimes', JSON.stringify(readingTimes));
+}
+
+
+
 function initializeBlogFeatures() {
   // Category Filtering
   setupCategoryFilter();
