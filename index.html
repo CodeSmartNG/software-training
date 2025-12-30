@@ -51,55 +51,113 @@
   <!-- Training -->
 <section class="section" id="training">
   <h2>Training Programs</h2>
-  <p class="section-desc">
-    We provide practical software training designed for beginners and
-    intermediate learners. Training is available in <strong>Hausa & English</strong>.
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button onclick="setLang('en')">English</button>
+    <button onclick="setLang('ha')">Hausa</button>
+  </div>
+
+  <p class="section-desc en">
+    We provide practical software training for beginners and intermediate learners.
+    Training is available in <strong>Hausa & English</strong>.
+  </p>
+
+  <p class="section-desc ha hidden">
+    Muna bayar da horon software mai amfani ga masu farawa da matsakaita.
+    Horon yana gudana a <strong>Hausa da Turanci</strong>.
   </p>
 
   <div class="training-cards">
 
+    <!-- Frontend -->
     <div class="training-card">
-      <h3>Frontend Development</h3>
+      <h3 class="en">Frontend Development</h3>
+      <h3 class="ha hidden">Gina Shafin Yanar Gizo</h3>
+
       <p>HTML, CSS, JavaScript & React</p>
+
       <ul>
-        <li>Duration: 2 – 3 Months</li>
-        <li>Level: Beginner – Intermediate</li>
-        <li>Mode: Online / Physical</li>
+        <li class="en">Duration: 3 Months</li>
+        <li class="ha hidden">Tsawon lokaci: Watanni 3</li>
+
+        <li class="en">Schedule: Mon – Wed – Fri</li>
+        <li class="ha hidden">Lokaci: Litinin – Laraba – Juma'a</li>
+
+        <li>Fee: <strong>₦50,000</strong></li>
       </ul>
-      <a href="#contact" class="btn-small">Enroll Now</a>
+
+      <a href="outline/frontend.pdf" download class="outline-btn">Download Outline</a>
+
+      <button onclick="enroll('Frontend Development')" class="btn-small">
+        Enroll via WhatsApp
+      </button>
     </div>
 
+    <!-- Backend -->
     <div class="training-card">
-      <h3>Backend Development</h3>
+      <h3 class="en">Backend Development</h3>
+      <h3 class="ha hidden">Backend Programming</h3>
+
       <p>Node.js / Python</p>
+
       <ul>
-        <li>Duration: 2 Months</li>
-        <li>Level: Intermediate</li>
-        <li>Mode: Online</li>
+        <li class="en">Duration: 2 Months</li>
+        <li class="ha hidden">Tsawon lokaci: Watanni 2</li>
+
+        <li class="en">Schedule: Tue – Thu</li>
+        <li class="ha hidden">Lokaci: Talata – Alhamis</li>
+
+        <li>Fee: <strong>₦40,000</strong></li>
       </ul>
-      <a href="#contact" class="btn-small">Enroll Now</a>
+
+      <a href="outline/backend.pdf" download class="outline-btn">Download Outline</a>
+
+      <button onclick="enroll('Backend Development')" class="btn-small">
+        Enroll via WhatsApp
+      </button>
     </div>
 
+    <!-- Full Stack -->
     <div class="training-card">
       <h3>Full Stack Development</h3>
       <p>Frontend + Backend</p>
+
       <ul>
-        <li>Duration: 4 – 5 Months</li>
-        <li>Level: Beginner – Advanced</li>
-        <li>Mode: Online / Physical</li>
+        <li>Duration: 5 Months</li>
+        <li>Schedule: Mon – Fri</li>
+        <li>Fee: <strong>₦90,000</strong></li>
       </ul>
-      <a href="#contact" class="btn-small">Enroll Now</a>
+
+      <a href="outline/fullstack.pdf" download class="outline-btn">Download Outline</a>
+
+      <button onclick="enroll('Full Stack Development')" class="btn-small">
+        Enroll via WhatsApp
+      </button>
     </div>
 
+    <!-- Computer Basics -->
     <div class="training-card">
-      <h3>Computer Basics</h3>
-      <p>For absolute beginners</p>
+      <h3 class="en">Computer Basics</h3>
+      <h3 class="ha hidden">Asalin Amfani da Kwamfuta</h3>
+
       <ul>
-        <li>Duration: 1 Month</li>
-        <li>Level: Beginner</li>
-        <li>Mode: Physical</li>
+        <li class="en">Duration: 1 Month</li>
+        <li class="ha hidden">Tsawon lokaci: Wata 1</li>
+
+        <li class="en">Mode: Physical</li>
+        <li class="ha hidden">Tsari: A wuri</li>
+
+        <li>Fee: <strong>₦20,000</strong></li>
       </ul>
-      <a href="#contact" class="btn-small">Enroll Now</a>
+
+      <a href="outline/computer-basics.pdf" download class="outline-btn">
+        Download Outline
+      </a>
+
+      <button onclick="enroll('Computer Basics')" class="btn-small">
+        Enroll via WhatsApp
+      </button>
     </div>
 
   </div>
@@ -144,3 +202,4 @@
 </body>
 
 </html>
+
