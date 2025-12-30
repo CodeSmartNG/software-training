@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Student Registration</h2>
+
+<form id="regForm">
+  <input id="name" placeholder="Name" required />
+  <input id="email" placeholder="Email" required />
+  <input id="course" placeholder="Course" required />
+  <button>Register</button>
+</form>
+
+<script>
+document.getElementById("regForm").onsubmit = e => {
+  e.preventDefault();
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  students.push({
+    name: name.value,
+    email: email.value,
+    course: course.value
+  });
+  localStorage.setItem("students", JSON.stringify(students));
+  alert("Registered Successfully");
+};
+</script>
+</body>
+</html>
