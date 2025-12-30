@@ -8,6 +8,25 @@
 </head>
 <body>
 
+
+<script>
+  const phone = "2348160932630"; // saka WhatsApp number dinka
+
+  function enroll(course) {
+    const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function setLang(lang) {
+    document.querySelectorAll(".en").forEach(e =>
+      e.classList.toggle("hidden", lang !== "en")
+    );
+    document.querySelectorAll(".ha").forEach(e =>
+      e.classList.toggle("hidden", lang !== "ha")
+    );
+  }
+</script>
+  
   <!-- Navbar -->
   <nav class="navbar">
     <img src="logo.png" alt="CodeSmart NG Logo" class="logo">
@@ -202,4 +221,5 @@
 </body>
 
 </html>
+
 
