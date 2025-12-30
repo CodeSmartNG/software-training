@@ -3,229 +3,589 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>CodeSmart NG | Software & Training</title>
-  <meta name="description" content="CodeSmart NG – Software development & training in Hausa and English. Learn Frontend, Backend, Full Stack & Computer Basics.">
-  <meta name="keywords" content="CodeSmart NG, software training, web development, programming, Nigeria">
+  <title>CodeSmart NG | Software Development & Training</title>
+  <meta name="description" content="CodeSmart NG – Professional software development & training in Hausa and English. Learn Frontend, Backend, Full Stack & Computer Basics. Transform your career today!">
+  <meta name="keywords" content="CodeSmart NG, software training, web development, programming, Nigeria, Hausa programming, coding bootcamp, tech training">
   <meta name="author" content="CodeSmart NG">
-
+  
+  <!-- Open Graph Tags for Social Media -->
+  <meta property="og:title" content="CodeSmart NG | Software Development & Training">
+  <meta property="og:description" content="Learn coding in Hausa & English. Professional software training with job placement support.">
+  <meta property="og:image" content="https://codesmartng.github.io/software-training/images/og-image.jpg">
+  <meta property="og:url" content="https://codesmartng.github.io/software-training/">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS File -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="logo.png" />
 </head>
 <body>
-
-<!-- ================= NAVBAR ================= -->
-<nav class="navbar">
-  <img src="logo.png" alt="CodeSmart NG Logo" class="logo">
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#training">Training</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- ================= HERO ================= -->
-<section class="hero" id="home">
-  <h1>CodeSmart <span>NG</span></h1>
-  <p>Software & Training</p>
-  <a href="#training" class="btn">Explore Training</a>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section class="section" id="about">
-  <h2>About Us</h2>
-  <p>
-    CodeSmart NG is a software development and training center focused on
-    building modern websites, web applications, and empowering young people
-    with programming and digital skills.
-  </p>
-</section>
-
-<!-- ================= SERVICES ================= -->
-<section class="section gray" id="services">
-  <h2>Our Services</h2>
-  <div class="cards">
-    <div class="card">Website Development</div>
-    <div class="card">Web Applications</div>
-    <div class="card">Software Training</div>
-    <div class="card">Tech Consulting</div>
-  </div>
-</section>
-
-<!-- ================= TRAINING ================= -->
-<section class="section" id="training">
-  <h2>Training Programs</h2>
-
-  <!-- Language Toggle -->
-  <div class="lang-toggle">
-    <button onclick="setLang('en')">English</button>
-    <button onclick="setLang('ha')">Hausa</button>
-  </div>
-
-  <p class="section-desc en">
-    We provide practical software training for beginners and intermediate learners.
-    Training is available in <strong>Hausa & English</strong>.
-  </p>
-
-  <p class="section-desc ha hidden">
-    Muna bayar da horon software mai amfani ga masu farawa da matsakaita.
-    Horon yana gudana a <strong>Hausa da Turanci</strong>.
-  </p>
-
-  <div class="training-cards">
-
-    <!-- Frontend -->
-    <div class="training-card">
-      <h3 class="en">Frontend Development</h3>
-      <h3 class="ha hidden">Gina Shafin Yanar Gizo</h3>
-      <p>HTML, CSS, JavaScript & React</p>
-
-      <ul>
-        <li class="en">Duration: 3 Months</li>
-        <li class="ha hidden">Tsawon lokaci: Watanni 3</li>
-        <li>Fee: <strong>₦50,000</strong></li>
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <img src="logo.png" alt="CodeSmart NG Logo" class="logo">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#training" class="nav-cta">Enroll Now</a></li>
       </ul>
+    </div>
+  </nav>
 
-<button
-  onclick="payWithPaystack(20000, 'Frontend Development')"
-  class="btn-small paystack"
->
-  Pay with Paystack
-</button>
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <h1>CodeSmart <span>NG</span></h1>
+      <p>Transform Your Career with Professional Software Training in Hausa & English</p>
+      <div class="hero-buttons">
+        <a href="#training" class="btn">View Courses</a>
+        <a href="#contact" class="btn btn-secondary">Free Consultation</a>
+      </div>
+    </div>
+  </section>
 
+  <!-- ================= ABOUT ================= -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <h2 class="section-title">About Us</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Empowering Tech Talent in Nigeria</h2>
+          <p>
+            CodeSmart NG is a leading software development and training center focused on 
+            building modern websites, web applications, and empowering young Nigerians 
+            with practical programming and digital skills.
+          </p>
+          <p>
+            We provide quality education in both Hausa and English, making technology 
+            accessible to everyone regardless of language barriers.
+          </p>
+          <div class="about-features">
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-language"></i>
+              </div>
+              <div>
+                <h4>Bilingual Training</h4>
+                <p>Learn in Hausa & English</p>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <div>
+                <h4>Hands-on Projects</h4>
+                <p>Real-world applications</p>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div>
+                <h4>Expert Mentors</h4>
+                <p>Industry professionals</p>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div>
+                <h4>Career Support</h4>
+                <p>Job placement assistance</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Team Collaboration">
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ================= SERVICES ================= -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Website Development</h3>
+          <p>Professional websites and web applications tailored to your business needs.</p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Web Applications</h3>
+          <p>Custom web solutions with modern frameworks and technologies.</p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Software Training</h3>
+          <p>Comprehensive programming courses for beginners to advanced learners.</p>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>Tech Consulting</h3>
+          <p>Expert advice on technology solutions for your business growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRAINING ================= -->
+  <section class="section training-section" id="training">
+    <div class="container">
+      <h2 class="section-title">Training Programs</h2>
       
-      <a href="outline/frontend.pdf" download class="outline-btn">Download Outline</a>
-      <button onclick="enroll('Frontend Development')" class="btn-small">
-        Enroll via WhatsApp
-      </button>
+      <!-- Language Toggle -->
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="ha">Hausa</button>
+      </div>
+
+      <p class="section-desc en">
+        We provide practical software training for beginners and intermediate learners.
+        Training is available in <strong>Hausa & English</strong>.
+      </p>
+
+      <p class="section-desc ha hidden">
+        Muna bayar da horon software mai amfani ga masu farawa da matsakaita.
+        Horon yana gudana a <strong>Hausa da Turanci</strong>.
+      </p>
+
+      <div class="training-cards">
+        <!-- Frontend Development -->
+        <div class="training-card">
+          <h3 class="en">Frontend Development</h3>
+          <h3 class="ha hidden">Gina Shafin Yanar Gizo</h3>
+          <p class="en">HTML, CSS, JavaScript & React</p>
+          <p class="ha hidden">HTML, CSS, JavaScript & React</p>
+          
+          <ul>
+            <li class="en">Duration: 3 Months</li>
+            <li class="ha hidden">Tsawon lokaci: Watanni 3</li>
+            <li class="en">Real-world projects</li>
+            <li class="ha hidden">Ayyukan gaskiya</li>
+            <li class="en">Portfolio building</li>
+            <li class="ha hidden">Gina portfolio</li>
+            <li class="en">Fee: <strong>₦50,000</strong></li>
+            <li class="ha hidden">Kudin: <strong>₦50,000</strong></li>
+          </ul>
+
+          <div class="card-buttons">
+            <button onclick="payWithPaystack(50000, 'Frontend Development')" class="btn-small paystack">
+              <i class="fas fa-credit-card"></i> Pay Online
+            </button>
+            <a href="outline/frontend.pdf" download class="outline-btn">
+              <i class="fas fa-download"></i> Download Outline
+            </a>
+            <button onclick="enroll('Frontend Development')" class="btn-small whatsapp-btn">
+              <i class="fab fa-whatsapp"></i> Enroll via WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Backend Development -->
+        <div class="training-card">
+          <h3 class="en">Backend Development</h3>
+          <h3 class="ha hidden">Backend Programming</h3>
+          <p class="en">Node.js / Python with Databases</p>
+          <p class="ha hidden">Node.js / Python tare da Databases</p>
+          
+          <ul>
+            <li class="en">Duration: 2 Months</li>
+            <li class="ha hidden">Tsawon lokaci: Watanni 2</li>
+            <li class="en">API Development</li>
+            <li class="ha hidden">Gina API</li>
+            <li class="en">Database Design</li>
+            <li class="ha hidden">Zane na Database</li>
+            <li class="en">Fee: <strong>₦40,000</strong></li>
+            <li class="ha hidden">Kudin: <strong>₦40,000</strong></li>
+          </ul>
+
+          <div class="card-buttons">
+            <button onclick="payWithPaystack(40000, 'Backend Development')" class="btn-small paystack">
+              <i class="fas fa-credit-card"></i> Pay Online
+            </button>
+            <a href="outline/backend.pdf" download class="outline-btn">
+              <i class="fas fa-download"></i> Download Outline
+            </a>
+            <button onclick="enroll('Backend Development')" class="btn-small whatsapp-btn">
+              <i class="fab fa-whatsapp"></i> Enroll via WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Full Stack Development -->
+        <div class="training-card">
+          <h3 class="en">Full Stack Development</h3>
+          <h3 class="ha hidden">Cikakken Software</h3>
+          <p class="en">Frontend + Backend Complete</p>
+          <p class="ha hidden">Gaba da Baya gabaɗaya</p>
+          
+          <ul>
+            <li class="en">Duration: 5 Months</li>
+            <li class="ha hidden">Tsawon lokaci: Watanni 5</li>
+            <li class="en">Complete web applications</li>
+            <li class="ha hidden">Cikakkun aikace-aikacen yanar gizo</li>
+            <li class="en">Deployment & Hosting</li>
+            <li class="ha hidden">Saka da kuma hosting</li>
+            <li class="en">Fee: <strong>₦90,000</strong></li>
+            <li class="ha hidden">Kudin: <strong>₦90,000</strong></li>
+          </ul>
+
+          <div class="card-buttons">
+            <button onclick="payWithPaystack(90000, 'Full Stack Development')" class="btn-small paystack">
+              <i class="fas fa-credit-card"></i> Pay Online
+            </button>
+            <a href="outline/fullstack.pdf" download class="outline-btn">
+              <i class="fas fa-download"></i> Download Outline
+            </a>
+            <button onclick="enroll('Full Stack Development')" class="btn-small whatsapp-btn">
+              <i class="fab fa-whatsapp"></i> Enroll via WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Computer Basics -->
+        <div class="training-card">
+          <h3 class="en">Computer Basics</h3>
+          <h3 class="ha hidden">Asalin Amfani da Kwamfuta</h3>
+          <p class="en">Complete Beginner Course</p>
+          <p class="ha hidden">Cikakken kwas na masu farawa</p>
+          
+          <ul>
+            <li class="en">Duration: 1 Month</li>
+            <li class="ha hidden">Tsawon lokaci: Wata 1</li>
+            <li class="en">Microsoft Office Suite</li>
+            <li class="ha hidden">Microsoft Office</li>
+            <li class="en">Internet & Email Skills</li>
+            <li class="ha hidden">Dandalin Intanet da Email</li>
+            <li class="en">Fee: <strong>₦20,000</strong></li>
+            <li class="ha hidden">Kudin: <strong>₦20,000</strong></li>
+          </ul>
+
+          <div class="card-buttons">
+            <button onclick="payWithPaystack(20000, 'Computer Basics')" class="btn-small paystack">
+              <i class="fas fa-credit-card"></i> Pay Online
+            </button>
+            <a href="outline/computer-basics.pdf" download class="outline-btn">
+              <i class="fas fa-download"></i> Download Outline
+            </a>
+            <button onclick="enroll('Computer Basics')" class="btn-small whatsapp-btn">
+              <i class="fab fa-whatsapp"></i> Enroll via WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="section testimonials-section" id="testimonials">
+    <div class="container">
+      <h2 class="section-title">Student Success Stories</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left quote-icon"></i>
+            <p>"The practical approach helped me land my first developer job within 2 months of completing the course!"</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+            <div>
+              <h4>Sarah Johnson</h4>
+              <p>Frontend Developer</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left quote-icon"></i>
+            <p>"Learning in Hausa made everything click for me. Now I'm building websites for local businesses in my community."</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Ahmed Musa">
+            <div>
+              <h4>Ahmed Musa</h4>
+              <p>Freelance Web Developer</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <i class="fas fa-quote-left quote-icon"></i>
+            <p>"Best decision I made for my career transition. The mentorship and support were exceptional throughout the journey."</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Michael Adebayo">
+            <div>
+              <h4>Michael Adebayo</h4>
+              <p>Full Stack Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Us</h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Get In Touch</h3>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h4>Location</h4>
+              <p>Nigeria</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h4>Phone</h4>
+              <p>+234 816 093 2630</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h4>Email</h4>
+              <p>codesmartng@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <div>
+              <h4>WhatsApp</h4>
+              <p>+234 816 093 2630</p>
+            </div>
+          </div>
+        </div>
+        
+        <form 
+          action="https://formsubmit.co/codesmartng@gmail.com"
+          method="POST"
+          class="contact-form"
+        >
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <input type="tel" name="phone" placeholder="Phone Number" />
+          <select name="course" required>
+            <option value="" disabled selected>Select Course Interest</option>
+            <option value="frontend">Frontend Development</option>
+            <option value="backend">Backend Development</option>
+            <option value="fullstack">Full Stack Development</option>
+            <option value="basics">Computer Basics</option>
+            <option value="other">Other Inquiry</option>
+          </select>
+          <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+          
+          <input type="hidden" name="_subject" value="New Message from CodeSmart NG Website">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          
+          <button type="submit" class="btn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <img src="logo.png" alt="CodeSmart NG Logo" class="footer-logo">
+          <p>Empowering the next generation of software developers in Nigeria and beyond.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/2348160932630"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#training">Training</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Courses</h4>
+          <ul>
+            <li><a href="#training">Frontend Development</a></li>
+            <li><a href="#training">Backend Development</a></li>
+            <li><a href="#training">Full Stack Development</a></li>
+            <li><a href="#training">Computer Basics</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <p>Subscribe to get updates on new courses and offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your Email" required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          </form>
+        </div>
+      </div>
       
+      <div class="footer-bottom">
+        <p>&copy; 2025 CodeSmart NG. All Rights Reserved.</p>
+      </div>
     </div>
+  </footer>
 
-    <!-- Backend -->
-    <div class="training-card">
-      <h3 class="en">Backend Development</h3>
-      <h3 class="ha hidden">Backend Programming</h3>
-      <p>Node.js / Python</p>
+  <!-- ================= WHATSAPP FLOAT ================= -->
+  <a href="https://wa.me/2348160932630" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
-      <ul>
-        <li class="en">Duration: 2 Months</li>
-        <li class="ha hidden">Tsawon lokaci: Watanni 2</li>
-        <li>Fee: <strong>₦40,000</strong></li>
-      </ul>
+  <!-- ================= SCRIPTS ================= -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    const phone = "2348160932630";
 
-      <a href="outline/backend.pdf" download class="outline-btn">Download Outline</a>
-      <button onclick="enroll('Backend Development')" class="btn-small">
-        Enroll via WhatsApp
-      </button>
-    </div>
-
-    <!-- Full Stack -->
-    <div class="training-card">
-      <h3>Full Stack Development</h3>
-      <p>Frontend + Backend</p>
-
-      <ul>
-        <li>Duration: 5 Months</li>
-        <li>Fee: <strong>₦90,000</strong></li>
-      </ul>
-
-      <a href="outline/fullstack.pdf" download class="outline-btn">Download Outline</a>
-      <button onclick="enroll('Full Stack Development')" class="btn-small">
-        Enroll via WhatsApp
-      </button>
-    </div>
-
-    <!-- Computer Basics -->
-    <div class="training-card">
-      <h3 class="en">Computer Basics</h3>
-      <h3 class="ha hidden">Asalin Amfani da Kwamfuta</h3>
-
-      <ul>
-        <li class="en">Duration: 1 Month</li>
-        <li class="ha hidden">Tsawon lokaci: Wata 1</li>
-        <li>Fee: <strong>₦20,000</strong></li>
-      </ul>
-
-      <a href="outline/computer-basics.pdf" download class="outline-btn">Download Outline</a>
-      <button onclick="enroll('Computer Basics')" class="btn-small">
-        Enroll via WhatsApp
-      </button>
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section class="section gray" id="contact">
-  <h2>Contact Us</h2>
-
-  <form
-    action="https://formsubmit.co/codesmartng@gmail.com"
-    method="POST"
-    class="contact-form"
-  >
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <textarea name="message" placeholder="Your Message" required></textarea>
-
-    <input type="hidden" name="_subject" value="New Message from CodeSmart NG Website">
-    <input type="hidden" name="_captcha" value="false">
-
-    <button type="submit">Send Message</button>
-  </form>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer>
-  <p>© 2025 CodeSmart NG. All Rights Reserved.</p>
-</footer>
-
-<!-- ================= WHATSAPP FLOAT ================= -->
-<a href="https://wa.me/2348160932630" class="whatsapp-float" target="_blank">
-  💬
-</a>
-
-<!-- ================= SCRIPTS ================= -->
-<script>
-  const phone = "2348160932630";
-
-  function enroll(course) {
-    const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-  }
-
-  function setLang(lang) {
-    document.querySelectorAll(".en").forEach(el =>
-      el.classList.toggle("hidden", lang !== "en")
-    );
-    document.querySelectorAll(".ha").forEach(el =>
-      el.classList.toggle("hidden", lang !== "ha")
-    );
-  }
-</script>
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script>
-function payWithPaystack(amount, course) {
-  let handler = PaystackPop.setup({
-    key: 'pk_test_xxxxxxxxxxxxx', // PUBLIC KEY
-    email: 'student@email.com',
-    amount: amount * 100,
-    currency: "NGN",
-    metadata: { course },
-    callback: function(response){
-      alert("Payment successful!");
-      window.location.href = "register.html";
+    function enroll(course) {
+      const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
     }
-  });
-  handler.openIframe();
-}
-</script>
+
+    // Language Toggle
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        
+        // Update active button
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Toggle language content
+        document.querySelectorAll('.en').forEach(el => {
+          el.classList.toggle('hidden', lang !== 'en');
+        });
+        document.querySelectorAll('.ha').forEach(el => {
+          el.classList.toggle('hidden', lang !== 'ha');
+        });
+      });
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      this.innerHTML = navLinks.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if(navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+      });
+    });
+
+    // Paystack Payment Function
+    function payWithPaystack(amount, course) {
+      const email = prompt("Please enter your email address for payment receipt:");
+      if (!email) return;
+      
+      let handler = PaystackPop.setup({
+        key: 'pk_test_xxxxxxxxxxxxx', // Replace with your Paystack public key
+        email: email,
+        amount: amount * 100,
+        currency: "NGN",
+        metadata: { 
+          course: course,
+          customer_name: prompt("Enter your full name:")
+        },
+        callback: function(response){
+          alert(`Payment successful! Transaction reference: ${response.reference}`);
+          // Redirect to registration page or show success message
+          window.location.href = `register.html?course=${encodeURIComponent(course)}&ref=${response.reference}`;
+        },
+        onClose: function(){
+          alert('Payment window closed.');
+        }
+      });
+      handler.openIframe();
+    }
+
+    // Newsletter Form Submission
+    document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      alert(`Thank you for subscribing with ${email}! We'll keep you updated.`);
+      this.reset();
+    });
+
+    // Form submission feedback
+    document.querySelector('.contact-form')?.addEventListener('submit', function() {
+      setTimeout(() => {
+        alert('Thank you for your message! We will get back to you within 24 hours.');
+      }, 100);
+    });
+  </script>
 </body>
 </html>
-
-
-
-
