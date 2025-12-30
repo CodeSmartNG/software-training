@@ -196,6 +196,23 @@
     );
   }
 </script>
-
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+function payWithPaystack(amount, course) {
+  let handler = PaystackPop.setup({
+    key: 'pk_test_xxxxxxxxxxxxx', // PUBLIC KEY
+    email: 'student@email.com',
+    amount: amount * 100,
+    currency: "NGN",
+    metadata: { course },
+    callback: function(response){
+      alert("Payment successful!");
+      window.location.href = "register.html";
+    }
+  });
+  handler.openIframe();
+}
+</script>
 </body>
 </html>
+
