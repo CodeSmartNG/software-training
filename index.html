@@ -3,71 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>CodeSmart NG | Software & Training</title>
+  <meta name="description" content="CodeSmart NG – Software development & training in Hausa and English. Learn Frontend, Backend, Full Stack & Computer Basics.">
+  <meta name="keywords" content="CodeSmart NG, software training, web development, programming, Nigeria">
+  <meta name="author" content="CodeSmart NG">
+
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="logo.png" />
 </head>
 <body>
 
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+  <img src="logo.png" alt="CodeSmart NG Logo" class="logo">
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#training">Training</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-<script>
-  const phone = "2348160932630"; // saka WhatsApp number dinka
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <h1>CodeSmart <span>NG</span></h1>
+  <p>Software & Training</p>
+  <a href="#training" class="btn">Explore Training</a>
+</section>
 
-  function enroll(course) {
-    const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-  }
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <h2>About Us</h2>
+  <p>
+    CodeSmart NG is a software development and training center focused on
+    building modern websites, web applications, and empowering young people
+    with programming and digital skills.
+  </p>
+</section>
 
-  function setLang(lang) {
-    document.querySelectorAll(".en").forEach(e =>
-      e.classList.toggle("hidden", lang !== "en")
-    );
-    document.querySelectorAll(".ha").forEach(e =>
-      e.classList.toggle("hidden", lang !== "ha")
-    );
-  }
-</script>
-  
-  <!-- Navbar -->
-  <nav class="navbar">
-    <img src="logo.png" alt="CodeSmart NG Logo" class="logo">
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#training">Training</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- ================= SERVICES ================= -->
+<section class="section gray" id="services">
+  <h2>Our Services</h2>
+  <div class="cards">
+    <div class="card">Website Development</div>
+    <div class="card">Web Applications</div>
+    <div class="card">Software Training</div>
+    <div class="card">Tech Consulting</div>
+  </div>
+</section>
 
-  <!-- Hero -->
-  <section class="hero" id="home">
-    <h1>CodeSmart <span>NG</span></h1>
-    <p>Software & Training</p>
-    <a href="#contact" class="btn">Get Started</a>
-  </section>
-
-  <!-- About -->
-  <section class="section" id="about">
-    <h2>About Us</h2>
-    <p>
-      CodeSmart NG is a software development and training center focused on
-      building modern websites, web applications, and training young people
-      in programming and digital skills.
-    </p>
-  </section>
-
-  <!-- Services -->
-  <section class="section gray" id="services">
-    <h2>Our Services</h2>
-    <div class="cards">
-      <div class="card">Website Development</div>
-      <div class="card">Web Applications</div>
-      <div class="card">Software Training</div>
-      <div class="card">Tech Consulting</div>
-    </div>
-  </section>
-
-  <!-- Training -->
+<!-- ================= TRAINING ================= -->
 <section class="section" id="training">
   <h2>Training Programs</h2>
 
@@ -93,21 +80,15 @@
     <div class="training-card">
       <h3 class="en">Frontend Development</h3>
       <h3 class="ha hidden">Gina Shafin Yanar Gizo</h3>
-
       <p>HTML, CSS, JavaScript & React</p>
 
       <ul>
         <li class="en">Duration: 3 Months</li>
         <li class="ha hidden">Tsawon lokaci: Watanni 3</li>
-
-        <li class="en">Schedule: Mon – Wed – Fri</li>
-        <li class="ha hidden">Lokaci: Litinin – Laraba – Juma'a</li>
-
         <li>Fee: <strong>₦50,000</strong></li>
       </ul>
 
       <a href="outline/frontend.pdf" download class="outline-btn">Download Outline</a>
-
       <button onclick="enroll('Frontend Development')" class="btn-small">
         Enroll via WhatsApp
       </button>
@@ -117,21 +98,15 @@
     <div class="training-card">
       <h3 class="en">Backend Development</h3>
       <h3 class="ha hidden">Backend Programming</h3>
-
       <p>Node.js / Python</p>
 
       <ul>
         <li class="en">Duration: 2 Months</li>
         <li class="ha hidden">Tsawon lokaci: Watanni 2</li>
-
-        <li class="en">Schedule: Tue – Thu</li>
-        <li class="ha hidden">Lokaci: Talata – Alhamis</li>
-
         <li>Fee: <strong>₦40,000</strong></li>
       </ul>
 
       <a href="outline/backend.pdf" download class="outline-btn">Download Outline</a>
-
       <button onclick="enroll('Backend Development')" class="btn-small">
         Enroll via WhatsApp
       </button>
@@ -144,12 +119,10 @@
 
       <ul>
         <li>Duration: 5 Months</li>
-        <li>Schedule: Mon – Fri</li>
         <li>Fee: <strong>₦90,000</strong></li>
       </ul>
 
       <a href="outline/fullstack.pdf" download class="outline-btn">Download Outline</a>
-
       <button onclick="enroll('Full Stack Development')" class="btn-small">
         Enroll via WhatsApp
       </button>
@@ -163,17 +136,10 @@
       <ul>
         <li class="en">Duration: 1 Month</li>
         <li class="ha hidden">Tsawon lokaci: Wata 1</li>
-
-        <li class="en">Mode: Physical</li>
-        <li class="ha hidden">Tsari: A wuri</li>
-
         <li>Fee: <strong>₦20,000</strong></li>
       </ul>
 
-      <a href="outline/computer-basics.pdf" download class="outline-btn">
-        Download Outline
-      </a>
-
+      <a href="outline/computer-basics.pdf" download class="outline-btn">Download Outline</a>
       <button onclick="enroll('Computer Basics')" class="btn-small">
         Enroll via WhatsApp
       </button>
@@ -182,44 +148,54 @@
   </div>
 </section>
 
-  <!-- Contact -->
-  <section class="section gray" id="contact">
-    <h2>Contact Us</h2>
+<!-- ================= CONTACT ================= -->
+<section class="section gray" id="contact">
+  <h2>Contact Us</h2>
 
-    <form
-      action="https://formsubmit.co/codesmartng@gmail.com"
-      method="POST"
-      class="contact-form"
-    >
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" required></textarea>
-
-      <!-- FormSubmit settings -->
-      <input type="hidden" name="_subject" value="New Message from CodeSmart NG Website">
-      <input type="hidden" name="_captcha" value="false">
-
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 CodeSmart NG. All Rights Reserved.</p>
-  </footer>
-
-  <!-- WhatsApp Floating Button -->
-  <a
-    href="https://wa.me/2348160932630"
-    class="whatsapp-float"
-    target="_blank"
-    title="Chat with us on WhatsApp"
+  <form
+    action="https://formsubmit.co/codesmartng@gmail.com"
+    method="POST"
+    class="contact-form"
   >
-    💬
-  </a>
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" placeholder="Your Message" required></textarea>
+
+    <input type="hidden" name="_subject" value="New Message from CodeSmart NG Website">
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>© 2025 CodeSmart NG. All Rights Reserved.</p>
+</footer>
+
+<!-- ================= WHATSAPP FLOAT ================= -->
+<a href="https://wa.me/2348160932630" class="whatsapp-float" target="_blank">
+  💬
+</a>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+  const phone = "2348160932630";
+
+  function enroll(course) {
+    const msg = `Hello CodeSmart NG, I want to enroll for ${course}.`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function setLang(lang) {
+    document.querySelectorAll(".en").forEach(el =>
+      el.classList.toggle("hidden", lang !== "en")
+    );
+    document.querySelectorAll(".ha").forEach(el =>
+      el.classList.toggle("hidden", lang !== "ha")
+    );
+  }
+</script>
 
 </body>
-
 </html>
-
-
