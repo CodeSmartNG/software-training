@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Admin Dashboard</h2>
+<ul id="list"></ul>
+
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+students.forEach(s => {
+  let li = document.createElement("li");
+  li.textContent = `${s.name} - ${s.course}`;
+  list.appendChild(li);
+});
+</script>
+</body>
+</html>
