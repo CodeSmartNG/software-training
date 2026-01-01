@@ -283,3 +283,116 @@
                         <label>Tags (comma separated)</label>
                         <input type="text" id="postTags" placeholder="coding, web development, nigeria">
                     </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closePostModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Publish Post</button>
+                    <button type="button" class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+    <script>
+        // Check login
+        if(localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        
+        // Load data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadEvents();
+            loadPosts();
+            loadWebinars();
+        });
+        
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function loadEvents() {
+            // Simulate loading events
+            const eventsGrid = document.getElementById('eventsGrid');
+            eventsGrid.innerHTML = `
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="date-day">25</span>
+                        <span class="date-month">Jan</span>
+                    </div>
+                    <div class="event-info">
+                        <h3>Free Webinar: Tech Career in 2025</h3>
+                        <p><i class="far fa-clock"></i> 2:00 PM - 4:00 PM</p>
+                        <p><i class="fas fa-video"></i> Online (Zoom)</p>
+                        <span class="event-status upcoming">Upcoming</span>
+                    </div>
+                    <div class="event-actions">
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showAddEventForm() {
+            document.getElementById('eventModal').style.display = 'block';
+        }
+        
+        function showAddPostForm() {
+            document.getElementById('postModal').style.display = 'block';
+        }
+        
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+        
+        function closePostModal() {
+            document.getElementById('postModal').style.display = 'none';
+        }
+        
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+        
+        function insertHeading() {
+            const editor = document.getElementById('postContentEditor');
+            const selection = window.getSelection();
+            const range = selection.getRangeAt(0);
+            const heading = document.createElement('h2');
+            heading.textContent = 'Heading';
+            range.insertNode(heading);
+        }
+        
+        function insertCode() {
+            const editor = document.getElementById('postContentEditor');
+            const selection = window.getSelection();
+            const range = selection.getRangeAt(0);
+            const code = document.createElement('code');
+            code.textContent = '// Your code here';
+            range.insertNode(code);
+        }
+        
+        function saveDraft() {
+            alert('Draft saved!');
+        }
+        
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
