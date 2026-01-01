@@ -263,7 +263,7 @@ function initializeVideoPlayer() {
 
 // ================= CERTIFICATE VIEWER =================
 function viewCertificate() {
-  window.open('https://images.unsplash.com/photo-1589256469067-ea99122bbdc4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80', '_blank');
+  window.open(' images/Green and White Modern Certificate of Appreciation_20260101_221530_0000.png ', '_blank');
 }
 
 // ================= NEWSLETTER SUBSCRIPTION =================
