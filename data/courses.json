@@ -1,0 +1,36 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "name": "Frontend Development",
+      "category": "frontend",
+      "duration": "3 Months",
+      "fee": 50000,
+      "language": "both",
+      "status": "active",
+      "description": "Learn HTML, CSS, JavaScript and React with practical projects",
+      "learn": ["HTML5", "CSS3", "JavaScript", "React", "Responsive Design", "Git & GitHub"],
+      "prerequisites": ["Basic computer knowledge", "Internet access"],
+      "image": "frontend-course.jpg",
+      "outline": "frontend.pdf",
+      "createdAt": "2024-01-01T10:00:00Z",
+      "updatedAt": "2024-01-01T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Backend Development",
+      "category": "backend",
+      "duration": "2 Months",
+      "fee": 40000,
+      "language": "en",
+      "status": "active",
+      "description": "Learn Node.js, Express, MongoDB and API development",
+      "learn": ["Node.js", "Express.js", "MongoDB", "REST APIs", "Authentication"],
+      "prerequisites": ["Basic JavaScript knowledge"],
+      "image": "backend-course.jpg",
+      "outline": "backend.pdf",
+      "createdAt": "2024-01-01T10:00:00Z",
+      "updatedAt": "2024-01-01T10:00:00Z"
+    }
+  ]
+}
