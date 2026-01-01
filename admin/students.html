@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar (Same as before) -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Logo">
+            <h3>CodeSmart NG</h3>
+            <p>Admin Panel</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="courses.html">
+                <i class="fas fa-graduation-cap"></i> Courses
+            </a>
+            <a href="events.html">
+                <i class="fas fa-calendar-alt"></i> Events & Blog
+            </a>
+            <a href="students.html" class="active">
+                <i class="fas fa-users"></i> Students
+            </a>
+            <a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <p>© 2025 CodeSmart NG</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Student Management</h1>
+            </div>
+            <div class="top-bar-right">
+                <button class="btn-primary" onclick="exportStudents()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <button class="btn-secondary" onclick="sendBulkMessage()">
+                    <i class="fas fa-envelope"></i> Message All
+                </button>
+            </div>
+        </header>
+        
+        <!-- Student Stats -->
+        <div class="student-stats">
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <p class="stat-number" id="totalStudents">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Enrollments</h3>
+                <p class="stat-number" id="activeStudents">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed Courses</h3>
+                <p class="stat-number" id="completedStudents">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>This Month</h3>
+                <p class="stat-number" id="monthStudents">0</p>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <input type="text" placeholder="Search students..." id="studentSearch">
+                <select id="courseFilter">
+                    <option value="">All Courses</option>
+                    <option value="frontend">Frontend Development</option>
+                    <option value="backend">Backend Development</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                    <option value="dropped">Dropped</option>
+                </select>
+                <button class="btn-primary" onclick="applyFilters()">Filter</button>
+            </div>
+        </div>
+        
+        <!-- Student Table -->
+        <div class="content-section">
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll"></th>
+                            <th>Student</th>
+                            <th>Contact</th>
+                            <th>Course</th>
+                            <th>Enrollment Date</th>
+                            <th>Progress</th>
+                            <th>Payment</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTable">
+                        <!-- Students will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Student Detail Modal -->
+    <div class="modal" id="studentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Student Details</h2>
+                <button class="close-modal" onclick="closeStudentModal()">&times;</button>
+            </div>
+            
+            <div class="student-detail" id="studentDetail">
+                <!-- Student details will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bulk Message Modal -->
+    <div class="modal" id="messageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Message to Students</h2>
+                <button class="close-modal" onclick="closeMessageModal()">&times;</button>
+            </div>
+            
+            <form id="messageForm">
+                <div class="form-group">
+                    <label>Recipients</label>
+                    <select id="messageRecipients">
+                        <option value="all">All Students</option>
+                        <option value="active">Active Students Only</option>
+                        <option value="completed">Completed Students</option>
+                        <option value="selected">Selected Students Only</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Subject *</label>
+                    <input type="text" id="messageSubject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Message *</label>
+                    <textarea id="messageContent" rows="6" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeMessageModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+    <script>
+        // Check login
+        if(localStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        
+        // Load students
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStudents();
+        });
+        
+        function loadStudents() {
+            // Simulate loading students
+            const tableBody = document.getElementById('studentsTable');
+            tableBody.innerHTML = `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        <div class="student-info">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
+                            <div>
+                                <strong>Ahmed Musa</strong>
+                                <small>ahmed@email.com</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p>+234 801 234 5678</p>
+                        <small>Lagos, Nigeria</small>
+                    </td>
+                    <td>Frontend Development</td>
+                    <td>15 Jan, 2025</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                            <span>75%</span>
+                        </div>
+                    </td>
+                    <td><span class="status status-paid">Paid</span></td>
+                    <td>
+                        <button class="btn-icon" onclick="viewStudent(1)"><i class="fas fa-eye"></i></button>
+                        <button class="btn-icon"><i class="fas fa-envelope"></i></button>
+                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        function viewStudent(id) {
+            document.getElementById('studentDetail').innerHTML = `
+                <div class="student-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student">
+                    <h3>Ahmed Musa</h3>
+                    <p>Frontend Development Student</p>
+                </div>
+                
+                <div class="student-info-grid">
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>ahmed@email.com</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Phone:</label>
+                        <span>+234 801 234 5678</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Enrollment Date:</label>
+                        <span>January 15, 2025</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Course Progress:</label>
+                        <span>75% Complete</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Last Login:</label>
+                        <span>Today, 10:30 AM</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Status:</label>
+                        <span class="status status-active">Active</span>
+                    </div>
+                </div>
+                
+                <div class="student-actions">
+                    <button class="btn-primary">Send Message</button>
+                    <button class="btn-secondary">View Progress</button>
+                    <button class="btn-secondary">Update Status</button>
+                </div>
+            `;
+            
+            document.getElementById('studentModal').style.display = 'block';
+        }
+        
+        function sendBulkMessage() {
+            document.getElementById('messageModal').style.display = 'block';
+        }
+        
+        function closeStudentModal() {
+            document.getElementById('studentModal').style.display = 'none';
+        }
+        
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+        
+        function exportStudents() {
+            alert('Exporting student data...');
+        }
+        
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            localStorage.removeItem('adminUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
