@@ -263,7 +263,7 @@ function initializeVideoPlayer() {
 
 // ================= CERTIFICATE VIEWER =================
 function viewCertificate() {
-  window.open(' images/Green and White Modern Certificate of Appreciation_20260101_221530_0000.png ', '_blank');
+  window.open(' https://www.canva.com/design/DAG9NFTRqFQ/Y5HQbCdXFTYkXGkMImg4ig/view?utm_content=DAG9NFTRqFQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h142c4ebff6  ', '_blank');
 }
 
 // ================= NEWSLETTER SUBSCRIPTION =================
