@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events - Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar (Same as before) -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../logo.png" alt="Logo">
+            <h3>CodeSmart NG</h3>
+            <p>Admin Panel</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="courses.html">
+                <i class="fas fa-graduation-cap"></i> Courses
+            </a>
+            <a href="events.html" class="active">
+                <i class="fas fa-calendar-alt"></i> Events & Blog
+            </a>
+            <a href="students.html">
+                <i class="fas fa-users"></i> Students
+            </a>
+            <a href="#" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <p>© 2025 CodeSmart NG</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Events & Blog Management</h1>
+            </div>
+            <div class="top-bar-right">
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="showAddEventForm()">
+                        <i class="fas fa-plus"></i> Add Event
+                    </button>
+                    <button class="btn-secondary" onclick="showAddPostForm()">
+                        <i class="fas fa-pen"></i> Write Blog Post
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('events')">Events</button>
+            <button class="tab-btn" onclick="switchTab('posts')">Blog Posts</button>
+            <button class="tab-btn" onclick="switchTab('webinars')">Webinars</button>
+        </div>
+        
+        <!-- Events Tab -->
+        <div class="tab-content active" id="eventsTab">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <div class="filter-controls">
+                        <select id="eventFilter">
+                            <option value="all">All Events</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="past">Past</option>
+                            <option value="active">Active</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Blog Posts Tab -->
+        <div class="tab-content" id="postsTab">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Blog Posts</h2>
+                    <input type="text" placeholder="Search posts..." onkeyup="searchPosts()">
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                                <th>Views</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsTable">
+                            <!-- Posts will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Webinars Tab -->
+        <div class="tab-content" id="webinarsTab">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Webinar Sessions</h2>
+                    <button class="btn-primary" onclick="scheduleWebinar()">
+                        <i class="fas fa-video"></i> Schedule Webinar
+                    </button>
+                </div>
+                
+                <div class="webinars-list" id="webinarsList">
+                    <!-- Webinars will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Event</h2>
+                <button class="close-modal" onclick="closeEventModal()">&times;</button>
+            </div>
+            
+            <form id="eventForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Event Title *</label>
+                        <input type="text" id="eventTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Event Type *</label>
+                        <select id="eventType" required>
+                            <option value="workshop">Workshop</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="bootcamp">Bootcamp</option>
+                            <option value="meetup">Meetup</option>
+                            <option value="competition">Competition</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Start Date *</label>
+                        <input type="datetime-local" id="eventStart" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>End Date *</label>
+                        <input type="datetime-local" id="eventEnd" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Venue/Link *</label>
+                        <input type="text" id="eventVenue" placeholder="Physical venue or Zoom link" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Max Participants</label>
+                        <input type="number" id="eventCapacity" min="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fee (₦)</label>
+                        <input type="number" id="eventFee" min="0" value="0">
+                        <small>0 for free events</small>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Description *</label>
+                        <textarea id="eventDescription" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Featured Image</label>
+                        <input type="file" id="eventImage" accept="image/*">
+                        <div class="image-preview" id="eventImagePreview"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="eventStatus">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeEventModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Add Post Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content wide-modal">
+            <div class="modal-header">
+                <h2>Write Blog Post</h2>
+                <button class="close-modal" onclick="closePostModal()">&times;</button>
+            </div>
+            
+            <form id="postForm">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Post Title *</label>
+                        <input type="text" id="postTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="postCategory" required>
+                            <option value="tutorial">Tutorial</option>
+                            <option value="news">News</option>
+                            <option value="career">Career</option>
+                            <option value="event">Event</option>
+                            <option value="student-story">Student Story</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="postLanguage">
+                            <option value="en">English</option>
+                            <option value="ha">Hausa</option>
+                            <option value="both">Both</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Author *</label>
+                        <input type="text" id="postAuthor" value="CodeSmart Team" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Featured Image</label>
+                        <input type="file" id="postImage" accept="image/*">
+                        <div class="image-preview" id="postImagePreview"></div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Excerpt *</label>
+                        <textarea id="postExcerpt" rows="2" required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Content *</label>
+                        <div id="postContentEditor" style="min-height: 300px; border: 1px solid #ddd; padding: 10px;" contenteditable="true"></div>
+                        <div class="editor-toolbar">
+                            <button type="button" onclick="formatText('bold')"><b>B</b></button>
+                            <button type="button" onclick="formatText('italic')"><i>I</i></button>
+                            <button type="button" onclick="formatText('underline')"><u>U</u></button>
+                            <button type="button" onclick="insertHeading()">H2</button>
+                            <button type="button" onclick="insertCode()"><code>{ }</code></button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Tags (comma separated)</label>
+                        <input type="text" id="postTags" placeholder="coding, web development, nigeria">
+                    </div>
