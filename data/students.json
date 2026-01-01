@@ -1,0 +1,16 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Ahmed Musa",
+      "email": "ahmed@email.com",
+      "phone": "+2348012345678",
+      "course": "Frontend Development",
+      "enrollmentDate": "2025-01-15",
+      "progress": 75,
+      "payment": "paid",
+      "status": "active",
+      "notes": "Excellent student, participates actively"
+    }
+  ]
+}
