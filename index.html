@@ -815,11 +815,10 @@ document.getElementById('contactForm').addEventListener('submit', async function
     
     try {
         // Update this URL when you deploy your backend live
-        const response = await fetch('http://localhost:3000/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
+        MONGODB_URI=mongodb://localhost:27017/codesmartng
+PORT=3000
+COOKIE_SECRET=your-32-character-secret-key-here-change-this
+NODE_ENV=development
         
         const result = await response.json();
         alert(result.message);
@@ -898,6 +897,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
