@@ -701,32 +701,48 @@
           </div>
         </div>
         
-        <form 
-          action="https://formsubmit.co/codesmartng@gmail.com"
-          method="POST"
-          class="contact-form"
-        >
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <input type="tel" name="phone" placeholder="Phone Number" />
-          <select name="course" required>
-            <option value="" disabled selected>Select Course Interest</option>
-            <option value="frontend">Frontend Development</option>
-            <option value="backend">Backend Development</option>
-            <option value="fullstack">Full Stack Development</option>
-            <option value="basics">Computer Basics</option>
-            <option value="other">Other Inquiry</option>
-          </select>
-          <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        <form id="contactForm" class="contact-form">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="tel" name="phone" placeholder="Phone Number" />
+    <select name="course" required>
+        <option value="" disabled selected>Select Course Interest</option>
+        <option value="frontend">Frontend Development</option>
+        <option value="backend">Backend Development</option>
+        <option value="fullstack">Full Stack Development</option>
+        <option value="basics">Computer Basics</option>
+        <option value="other">Other Inquiry</option>
+    </select>
+    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+    
+    <button type="submit" class="btn">
+        <i class="fas fa-paper-plane"></i> Send Message
+    </button>
+</form>
+<script>
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    
+    try {
+        // Update this URL when you deploy your backend live
+        const response = await fetch('http://localhost:3000/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        alert(result.message);
+        if (result.success) this.reset();
+    } catch (error) {
+        alert('Network error. Please try again.');
+    }
+});
+</script>
           
-          <input type="hidden" name="_subject" value="New Message from CodeSmart NG Website">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="table">
-          
-          <button type="submit" class="btn">
-            <i class="fas fa-paper-plane"></i> Send Message
-          </button>
-        </form>
       </div>
     </div>
   </section>
@@ -795,6 +811,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
