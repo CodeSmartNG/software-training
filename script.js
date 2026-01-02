@@ -1,6 +1,90 @@
-// ================= GLOBAL VARIABLES =================
+// ================= CONFIGURATION =================
+const BACKEND_URL = 'http://localhost:3000/api'; // Your backend URL
 const phone = "2348160932630";
 let quizScore = { frontend: 0, backend: 0, fullstack: 0 };
+
+// ================= API FUNCTIONS =================
+
+// Generic API call function
+async function callAPI(endpoint, method = 'GET', data = null) {
+  try {
+    const options = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    if (data && (method === 'POST' || method === 'PUT')) {
+      options.body = JSON.stringify(data);
+    }
+    
+    const response = await fetch(`${BACKEND_URL}${endpoint}`, options);
+    const result = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(result.message || 'API request failed');
+    }
+    
+    return result;
+  } catch (error) {
+    console.error(`API Error (${endpoint}):`, error);
+    throw error;
+  }
+}
+
+// Show notification message
+function showNotification(message, type = 'success') {
+  // Remove existing notifications
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
+  
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.innerHTML = `
+    <div class="notification-content">
+      <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+      <span>${message}</span>
+    </div>
+  `;
+  
+  // Add styles
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: ${type === 'success' ? '#10b981' : '#ef4444'};
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    animation: slideIn 0.3s ease;
+    max-width: 300px;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    notification.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, 5000);
+}
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
 
 // ================= MAIN FUNCTIONS =================
 
@@ -73,30 +157,61 @@ function initializeSmoothScrolling() {
   });
 }
 
-// ================= PAYSTACK PAYMENT =================
-function payWithPaystack(amount, course) {
+// ================= PAYSTACK PAYMENT (Updated) =================
+async function payWithPaystack(amount, course) {
   const email = prompt("Please enter your email address for payment receipt:");
   if (!email) return;
   
-  let handler = PaystackPop.setup({
-    key: 'pk_test_xxxxxxxxxxxxx', // Replace with your Paystack public key
-    email: email,
-    amount: amount * 100,
-    currency: "NGN",
-    metadata: { 
-      course: course,
-      customer_name: prompt("Enter your full name:")
-    },
-    callback: function(response){
-      alert(`Payment successful! Transaction reference: ${response.reference}`);
-      // Redirect to registration page or show success message
-      window.location.href = `register.html?course=${encodeURIComponent(course)}&ref=${response.reference}`;
-    },
-    onClose: function(){
-      alert('Payment window closed.');
-    }
-  });
-  handler.openIframe();
+  const name = prompt("Enter your full name:");
+  if (!name) return;
+  
+  try {
+    // Create payment record in backend
+    const paymentData = await callAPI('/payment/create', 'POST', {
+      amount,
+      course,
+      email,
+      name
+    });
+    
+    let handler = PaystackPop.setup({
+      key: 'pk_test_xxxxxxxxxxxxx', // Replace with your Paystack public key
+      email: email,
+      amount: amount * 100,
+      currency: "NGN",
+      ref: paymentData.reference,
+      metadata: { 
+        course: course,
+        customer_name: name,
+        payment_id: paymentData._id
+      },
+      callback: async function(response){
+        try {
+          // Verify payment on backend
+          const verification = await callAPI('/payment/verify', 'POST', {
+            reference: response.reference
+          });
+          
+          if (verification.success) {
+            showNotification(`Payment successful! You are now enrolled in ${course}.`, 'success');
+            
+            // Auto-enroll the student
+            setTimeout(() => {
+              enroll(course);
+            }, 2000);
+          }
+        } catch (error) {
+          showNotification('Payment verification failed. Please contact support.', 'error');
+        }
+      },
+      onClose: function(){
+        showNotification('Payment window closed.', 'info');
+      }
+    });
+    handler.openIframe();
+  } catch (error) {
+    showNotification('Failed to initialize payment. Please try again.', 'error');
+  }
 }
 
 // ================= LIVE COUNTER ANIMATION =================
@@ -203,6 +318,35 @@ function showQuizResult() {
 }
 
 // ================= SCHEDULE TOGGLE =================
+async function loadSchedule() {
+  try {
+    const scheduleData = await callAPI('/schedule');
+    
+    const container = document.querySelector('.schedule-container');
+    if (!container) return;
+    
+    container.innerHTML = scheduleData.map(item => `
+      <div class="schedule-card">
+        <div class="schedule-date">
+          <span class="date-day">${new Date(item.date).getDate()}</span>
+          <span class="date-month">${new Date(item.date).toLocaleString('default', { month: 'short' })}</span>
+        </div>
+        <div class="schedule-info">
+          <h3>${item.course}</h3>
+          <p><i class="far fa-clock"></i> ${item.time}</p>
+          <p><i class="fas fa-user"></i> Instructor: ${item.instructor}</p>
+          <p><i class="fas fa-video"></i> Mode: ${item.mode}</p>
+          <span class="seats-badge">${item.seatsLeft} Seats Left</span>
+        </div>
+        <button class="btn-small" onclick="enroll('${item.course}')">Join Now</button>
+      </div>
+    `).join('');
+    
+  } catch (error) {
+    console.error('Failed to load schedule:', error);
+  }
+}
+
 function initializeScheduleToggle() {
   document.querySelectorAll('.schedule-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -210,46 +354,39 @@ function initializeScheduleToggle() {
       this.classList.add('active');
       const type = this.getAttribute('data-type');
       
-      // Filter schedule cards (this is a simple example)
-      document.querySelectorAll('.schedule-card').forEach(card => {
-        card.style.display = 'flex';
-      });
+      // You can filter schedule by type here
+      loadSchedule(type); // Pass type to API
     });
   });
 }
 
-// ================= WEBINAR REGISTRATION =================
-function registerWebinar() {
+// ================= WEBINAR REGISTRATION (Updated) =================
+async function registerWebinar() {
   const name = prompt("Enter your name for webinar registration:");
-  const email = prompt("Enter your email:");
+  if (!name) return;
   
-  if (name && email) {
-    // In a real app, send this data to your backend
-    const webinarData = {
-      name: name,
-      email: email,
+  const email = prompt("Enter your email:");
+  if (!email) return;
+  
+  try {
+    await callAPI('/webinar/register', 'POST', {
+      name,
+      email,
       webinar: "How to Start Your Tech Career in 2025",
       date: "January 25, 2025"
-    };
+    });
     
-    alert(`Thank you ${name}! We've sent webinar details to ${email}. See you on Saturday!`);
+    showNotification(`Thank you ${name}! We've sent webinar details to ${email}.`, 'success');
     
-    // You can send this data to your server
-    // fetch('/api/webinar-register', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(webinarData)
-    // });
+  } catch (error) {
+    showNotification('Failed to register for webinar. Please try again.', 'error');
   }
 }
 
 // ================= VIDEO PLAYER =================
 function playVideo(videoId) {
-  alert(`Playing video: ${videoId}`);
-  // In a real implementation, you would:
-  // 1. Load the video player
-  // 2. Play the selected video
-  // 3. Update UI
+  // In a real implementation, you would load the video
+  showNotification('Video playback would start here', 'info');
 }
 
 function initializeVideoPlayer() {
@@ -263,45 +400,122 @@ function initializeVideoPlayer() {
 
 // ================= CERTIFICATE VIEWER =================
 function viewCertificate() {
-  window.open(' https://www.canva.com/design/DAG9NFTRqFQ/Y5HQbCdXFTYkXGkMImg4ig/view?utm_content=DAG9NFTRqFQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h142c4ebff6  ', '_blank');
+  window.open('https://www.canva.com/design/DAG9NFTRqFQ/Y5HQbCdXFTYkXGkMImg4ig/view', '_blank');
 }
 
-// ================= NEWSLETTER SUBSCRIPTION =================
+// ================= NEWSLETTER SUBSCRIPTION (Updated) =================
 function initializeNewsletter() {
   const newsletterForm = document.querySelector('.newsletter-form');
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
+    newsletterForm.addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email = this.querySelector('input[type="email"]').value;
+      const emailInput = this.querySelector('input[type="email"]');
+      const email = emailInput.value;
       
       // Simple validation
       if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address.');
+        showNotification('Please enter a valid email address.', 'error');
         return;
       }
       
-      alert(`Thank you for subscribing with ${email}! We'll keep you updated with our latest courses and offers.`);
-      this.reset();
-      
-      // In a real app, send to your backend
-      // fetch('/api/newsletter', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email: email })
-      // });
+      try {
+        await callAPI('/newsletter/subscribe', 'POST', { email });
+        showNotification(`Thank you for subscribing with ${email}!`, 'success');
+        this.reset();
+      } catch (error) {
+        showNotification('Subscription failed. Please try again.', 'error');
+      }
     });
   }
 }
 
-// ================= FORM SUBMISSION =================
+// ================= CONTACT FORM (Updated) =================
 function initializeContactForm() {
-  const contactForm = document.querySelector('.contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function() {
-      setTimeout(() => {
-        alert('Thank you for your message! We will get back to you within 24 hours.');
-      }, 100);
+  const contactForm = document.getElementById('contactForm');
+  if (!contactForm) return;
+  
+  // Remove the inline event listener and use this one
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    // Show loading state
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      
+      await callAPI('/contact', 'POST', data);
+      
+      showNotification('Thank you! Your message has been sent.', 'success');
+      this.reset();
+      
+    } catch (error) {
+      showNotification('Failed to send message. Please try again.', 'error');
+    } finally {
+      // Restore button
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+// ================= LOAD TESTIMONIALS FROM BACKEND =================
+async function loadTestimonials() {
+  try {
+    const testimonials = await callAPI('/testimonials');
+    
+    const container = document.querySelector('.testimonials-grid');
+    if (!container) return;
+    
+    container.innerHTML = testimonials.map(testimonial => `
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <i class="fas fa-quote-left quote-icon"></i>
+          <p>${testimonial.message}</p>
+        </div>
+        <div class="testimonial-author">
+          <img src="${testimonial.avatar || 'https://randomuser.me/api/portraits/men/32.jpg'}" alt="${testimonial.name}">
+          <div>
+            <h4>${testimonial.name}</h4>
+            <p>${testimonial.position}</p>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    
+  } catch (error) {
+    console.error('Failed to load testimonials:', error);
+  }
+}
+
+// ================= LOAD COURSES FROM BACKEND =================
+async function loadCourses() {
+  try {
+    const courses = await callAPI('/courses');
+    
+    // Update course information dynamically
+    courses.forEach(course => {
+      const card = document.querySelector(`[data-course="${course.id}"]`);
+      if (card) {
+        const priceElement = card.querySelector('.course-price');
+        if (priceElement) {
+          priceElement.innerHTML = `Fee: <strong>₦${course.price.toLocaleString()}</strong>`;
+        }
+        
+        const seatsElement = card.querySelector('.seats-badge');
+        if (seatsElement && course.seatsLeft) {
+          seatsElement.textContent = `${course.seatsLeft} Seats Left`;
+        }
+      }
     });
+    
+  } catch (error) {
+    console.error('Failed to load courses:', error);
   }
 }
 
@@ -316,7 +530,7 @@ function detectUserLanguage() {
 }
 
 // ================= INITIALIZE EVERYTHING =================
-function initializeEverything() {
+async function initializeEverything() {
   // Core functionality
   initializeLanguageToggle();
   initializeMobileMenu();
@@ -329,6 +543,17 @@ function initializeEverything() {
   initializeVideoPlayer();
   initializeNewsletter();
   initializeContactForm();
+  
+  // Load data from backend
+  try {
+    await Promise.all([
+      loadSchedule(),
+      loadTestimonials(),
+      loadCourses()
+    ]);
+  } catch (error) {
+    console.error('Failed to load some data:', error);
+  }
   
   // Additional features
   detectUserLanguage();
@@ -373,14 +598,15 @@ window.addEventListener('scroll', function() {
 // ================= ERROR HANDLING =================
 window.addEventListener('error', function(e) {
   console.error('Error occurred:', e.error);
-  // You can add error reporting here
+  // You can add error reporting to your backend here
+  // callAPI('/errors', 'POST', { error: e.error.toString(), url: window.location.href });
 });
 
 // ================= OFFLINE DETECTION =================
 window.addEventListener('offline', function() {
-  alert('You are offline. Some features may not work.');
+  showNotification('You are offline. Some features may not work.', 'error');
 });
 
 window.addEventListener('online', function() {
-  console.log('You are back online!');
+  showNotification('You are back online!', 'success');
 });
