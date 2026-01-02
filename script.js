@@ -1,5 +1,5 @@
 // script.js - UPDATED VERSION WITH COMPLETE BACKEND INTEGRATION
-const BACKEND_URL = 'http://localhost:3000/api'; // Your backend URL
+const BACKEND_URL = ' https://codesmartng.github.io/software-training/index.html '; // Your backend URL
 const phone = "2348160932630";
 let quizScore = { frontend: 0, backend: 0, fullstack: 0 };
 
