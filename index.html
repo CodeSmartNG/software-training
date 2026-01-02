@@ -27,6 +27,93 @@
   <link rel="icon" href="logo.png" />
 </head>
 <body>
+    <script>
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+        const response = await fetch('http://localhost:3000/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Success - show green message
+            showFormMessage('✅ ' + result.message, 'success');
+            this.reset(); // Clear form
+        } else {
+            // Server error (400/500 status)
+            showFormMessage('❌ ' + (result.message || 'Server error'), 'error');
+        }
+        
+    } catch (error) {
+        // Network or connection error
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            showFormMessage('🌐 Cannot connect to server. Make sure backend is running on http://localhost:3000', 'error');
+        } else {
+            showFormMessage('❌ Unexpected error: ' + error.message, 'error');
+        }
+    } finally {
+        // Restore button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+// Function to show beautiful messages
+function showFormMessage(text, type) {
+    // Remove any existing message
+    const oldMsg = document.getElementById('formMessage');
+    if (oldMsg) oldMsg.remove();
+    
+    // Create new message element
+    const messageDiv = document.createElement('div');
+    messageDiv.id = 'formMessage';
+    messageDiv.innerHTML = text;
+    messageDiv.style.cssText = `
+        padding: 12px 20px;
+        margin: 15px 0;
+        border-radius: 8px;
+        font-weight: 500;
+        ${type === 'success' ? 
+            'background: #d1fae5; color: #065f46; border: 1px solid #10b981;' : 
+            'background: #fee2e2; color: #dc2626; border: 1px solid #ef4444;'}
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }`;
+    document.head.appendChild(style);
+    
+    // Insert after the form
+    const form = document.getElementById('contactForm');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
+    
+    // Auto-remove success messages after 5 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.style.opacity = '0';
+                messageDiv.style.transform = 'translateY(-10px)';
+                setTimeout(() => messageDiv.remove(), 300);
+            }
+        }, 5000);
+    }
+}
+</script>
   <!-- ================= LIVE CLASS STATUS ================= -->
   <div class="live-status">
     <span class="live-dot"></span>
@@ -811,6 +898,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
