@@ -1,33 +1,7 @@
 // ================= ADMIN DASHBOARD FUNCTIONALITY =================
 
 
-const admin = new AdminJS({
-  resources: [
-    // Your existing resources (Course, User, etc.)
-    {
-      resource: Message,
-      options: {
-        listProperties: ['name', 'email', 'subject', 'date', 'isRead'],
-        properties: {
-          message: { type: 'textarea' }, // Better display for long text
-          date: { isVisible: { show: true, edit: false } } // Auto-set date
-        },
-        actions: {
-          // Optional: Add a custom action to mark as read
-          markAsRead: {
-            actionType: 'record',
-            handler: async (request, response, context) => {
-              const { record } = context;
-              await record.update({ isRead: true });
-              return { record: record.toJSON() };
-            }
-          }
-        }
-      }
-    },
-  ],
-  rootPath: '/admin',
-});
+
 
 // Check authentication
 function checkAuth() {
