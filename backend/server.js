@@ -1,11 +1,12 @@
-
-// server.js - COMPLETE WORKING VERSION
+// server.js - UPDATED VERSION WITH MORE FEATURES
 const express = require('express');
 const mongoose = require('mongoose');
 const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require('bcrypt');
+const cors = require('cors'); // ADD THIS
+require('dotenv').config(); // ADD THIS
 
 // Register MongoDB adapter
 AdminJS.registerAdapter(AdminJSMongoose);
@@ -13,6 +14,12 @@ AdminJS.registerAdapter(AdminJSMongoose);
 // Initialize Express
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// ================== CORS MIDDLEWARE ==================
+app.use(cors({
+    origin: ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://localhost:5500'],
+    credentials: true
+}));
 
 // ================== MODELS DEFINITION ==================
 
@@ -56,13 +63,47 @@ const CourseSchema = new mongoose.Schema({
 });
 const Course = mongoose.model('Course', CourseSchema);
 
+// 4. NEW: Student Enrollment Model
+const StudentSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: String,
+    course: { type: String, required: true },
+    paymentStatus: { type: String, default: 'pending' },
+    amountPaid: Number,
+    paymentReference: String,
+    enrollmentDate: { type: Date, default: Date.now },
+    status: { type: String, default: 'active' }
+});
+const Student = mongoose.model('Student', StudentSchema);
+
+// 5. NEW: Newsletter Subscription Model
+const NewsletterSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    subscribedAt: { type: Date, default: Date.now },
+    isActive: { type: Boolean, default: true }
+});
+const Newsletter = mongoose.model('Newsletter', NewsletterSchema);
+
+// 6. NEW: Testimonial Model
+const TestimonialSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    position: String,
+    message: { type: String, required: true },
+    avatar: String,
+    rating: { type: Number, min: 1, max: 5 },
+    isApproved: { type: Boolean, default: false },
+    date: { type: Date, default: Date.now }
+});
+const Testimonial = mongoose.model('Testimonial', TestimonialSchema);
+
 // ================== MIDDLEWARE ==================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ================== API ROUTES ==================
 
-// 1. Contact Form API
+// 1. Contact Form API (Already working)
 app.post('/api/contact', async (req, res) => {
     try {
         const newMessage = new Message({
@@ -70,14 +111,14 @@ app.post('/api/contact', async (req, res) => {
             email: req.body.email,
             phone: req.body.phone,
             course: req.body.course,
-            subject: req.body.subject,
-            message: req.body.message
+            message: req.body.message,
+            subject: `New inquiry for ${req.body.course || 'General Inquiry'}`
         });
         
         await newMessage.save();
         res.status(200).json({ 
             success: true, 
-            message: 'Thank you! Your message has been sent.' 
+            message: 'Thank you! Your message has been sent successfully.' 
         });
     } catch (error) {
         console.error('Error saving message:', error);
@@ -88,13 +129,200 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
-// 2. Public API to get courses (for your website)
+// 2. Public API to get courses
 app.get('/api/courses', async (req, res) => {
     try {
         const courses = await Course.find({ status: 'active' });
-        res.json(courses);
+        res.json({ success: true, data: courses });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch courses' });
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to fetch courses' 
+        });
+    }
+});
+
+// 3. NEW: Student Enrollment API
+app.post('/api/enroll', async (req, res) => {
+    try {
+        const { name, email, phone, course, paymentReference, amountPaid } = req.body;
+        
+        const newStudent = new Student({
+            name,
+            email,
+            phone,
+            course,
+            paymentReference,
+            amountPaid,
+            paymentStatus: paymentReference ? 'paid' : 'pending'
+        });
+        
+        await newStudent.save();
+        res.status(200).json({ 
+            success: true, 
+            message: 'Enrollment successful! We will contact you soon.',
+            studentId: newStudent._id
+        });
+    } catch (error) {
+        console.error('Enrollment error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Enrollment failed. Please try again.' 
+        });
+    }
+});
+
+// 4. NEW: Newsletter Subscription API
+app.post('/api/newsletter/subscribe', async (req, res) => {
+    try {
+        const { email } = req.body;
+        
+        // Check if already subscribed
+        const existing = await Newsletter.findOne({ email });
+        if (existing) {
+            return res.json({ 
+                success: true, 
+                message: 'You are already subscribed to our newsletter!' 
+            });
+        }
+        
+        const newSubscriber = new Newsletter({ email });
+        await newSubscriber.save();
+        
+        res.json({ 
+            success: true, 
+            message: 'Successfully subscribed to our newsletter!' 
+        });
+    } catch (error) {
+        console.error('Newsletter error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Subscription failed. Please try again.' 
+        });
+    }
+});
+
+// 5. NEW: Testimonials API
+app.get('/api/testimonials', async (req, res) => {
+    try {
+        const testimonials = await Testimonial.find({ isApproved: true })
+            .sort({ date: -1 })
+            .limit(10);
+        res.json({ success: true, data: testimonials });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to fetch testimonials' 
+        });
+    }
+});
+
+// 6. NEW: Schedule API (Return class schedules)
+app.get('/api/schedule', async (req, res) => {
+    try {
+        const schedule = [
+            {
+                id: 1,
+                course: "Frontend Development",
+                date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
+                time: "10:00 AM - 1:00 PM (Mon, Wed, Fri)",
+                instructor: "Musa Ahmed",
+                mode: "Online (Live)",
+                seatsLeft: 10
+            },
+            {
+                id: 2,
+                course: "Backend Development",
+                date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+                time: "2:00 PM - 5:00 PM (Tue, Thu)",
+                instructor: "Aisha Bello",
+                mode: "Hybrid",
+                seatsLeft: 5
+            },
+            {
+                id: 3,
+                course: "Computer Basics",
+                date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+                time: "9:00 AM - 12:00 PM (Weekdays)",
+                instructor: "Fatima Yusuf",
+                mode: "In-Person",
+                seatsLeft: 15
+            }
+        ];
+        
+        res.json({ success: true, data: schedule });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to fetch schedule' 
+        });
+    }
+});
+
+// 7. NEW: Payment initialization API (for Paystack)
+app.post('/api/payment/create', async (req, res) => {
+    try {
+        const { amount, course, email, name } = req.body;
+        
+        // Generate a unique reference
+        const reference = `CSN-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        
+        // Save payment intent to database (you might create a Payment model)
+        // For now, just return the reference
+        res.json({
+            success: true,
+            reference,
+            amount,
+            email,
+            message: 'Payment initialized successfully'
+        });
+    } catch (error) {
+        console.error('Payment error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to initialize payment' 
+        });
+    }
+});
+
+// 8. NEW: Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        timestamp: new Date(),
+        service: 'CodeSmart NG Backend',
+        version: '1.0.0'
+    });
+});
+
+// 9. NEW: Get contact messages (for testing)
+app.get('/api/messages', async (req, res) => {
+    try {
+        const messages = await Message.find().sort({ date: -1 });
+        res.json({ success: true, data: messages });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch messages' });
+    }
+});
+
+// 10. NEW: Get enrollment stats
+app.get('/api/stats', async (req, res) => {
+    try {
+        const totalStudents = await Student.countDocuments();
+        const totalMessages = await Message.countDocuments();
+        const totalCourses = await Course.countDocuments({ status: 'active' });
+        
+        res.json({
+            success: true,
+            data: {
+                totalStudents,
+                totalMessages,
+                totalCourses,
+                unreadMessages: await Message.countDocuments({ isRead: false })
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch stats' });
     }
 });
 
@@ -106,7 +334,7 @@ const adminOptions = {
             resource: Message,
             options: {
                 navigation: { name: 'Messages', icon: 'Message' },
-                listProperties: ['name', 'email', 'subject', 'date', 'isRead'],
+                listProperties: ['name', 'email', 'course', 'date', 'isRead'],
                 properties: {
                     message: { type: 'textarea' },
                     date: { isVisible: { list: true, show: true, edit: false } },
@@ -152,6 +380,43 @@ const adminOptions = {
             }
         },
         {
+            resource: Student,
+            options: {
+                navigation: { name: 'Students', icon: 'Users' },
+                listProperties: ['name', 'email', 'course', 'paymentStatus', 'enrollmentDate'],
+                properties: {
+                    paymentStatus: {
+                        availableValues: [
+                            { value: 'pending', label: 'Pending' },
+                            { value: 'paid', label: 'Paid' },
+                            { value: 'refunded', label: 'Refunded' }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            resource: Newsletter,
+            options: {
+                navigation: { name: 'Newsletter', icon: 'Mail' }
+            }
+        },
+        {
+            resource: Testimonial,
+            options: {
+                navigation: { name: 'Testimonials', icon: 'Star' },
+                properties: {
+                    message: { type: 'textarea' },
+                    isApproved: {
+                        availableValues: [
+                            { value: true, label: 'Approved' },
+                            { value: false, label: 'Pending' }
+                        ]
+                    }
+                }
+            }
+        },
+        {
             resource: User,
             options: {
                 navigation: { name: 'Admins', icon: 'User' },
@@ -186,16 +451,19 @@ const adminOptions = {
     dashboard: {
         handler: async () => {
             const messageCount = await Message.countDocuments();
-            const courseCount = await Course.countDocuments();
+            const courseCount = await Course.countDocuments({ status: 'active' });
             const unreadMessages = await Message.countDocuments({ isRead: false });
+            const studentCount = await Student.countDocuments();
+            const newsletterCount = await Newsletter.countDocuments({ isActive: true });
             
             return {
                 messageCount,
                 courseCount,
-                unreadMessages
+                unreadMessages,
+                studentCount,
+                newsletterCount
             };
-        },
-        component: AdminJS.bundle('./components/Dashboard') // Optional custom dashboard
+        }
     }
 };
 
@@ -214,7 +482,7 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
         }
         return null;
     },
-    cookiePassword: process.env.COOKIE_SECRET || 'change-this-to-32-character-secret',
+    cookiePassword: process.env.COOKIE_SECRET || 'your-32-character-secret-key-here-change-this',
     maxAge: 24 * 60 * 60 // 24 hours
 });
 
@@ -247,6 +515,95 @@ async function createFirstAdmin() {
     }
 }
 
+// ================== SEED INITIAL DATA ==================
+
+async function seedInitialData() {
+    try {
+        // Check if courses exist
+        const courseCount = await Course.countDocuments();
+        if (courseCount === 0) {
+            const courses = [
+                {
+                    name: 'Frontend Development',
+                    category: 'development',
+                    duration: '3 Months',
+                    fee: 50000,
+                    language: 'en',
+                    description: 'Learn HTML, CSS, JavaScript & React',
+                    learn: ['HTML5 & CSS3', 'JavaScript ES6+', 'React.js', 'Responsive Design'],
+                    prerequisites: ['Basic computer knowledge'],
+                    status: 'active'
+                },
+                {
+                    name: 'Backend Development',
+                    category: 'development',
+                    duration: '2 Months',
+                    fee: 40000,
+                    language: 'en',
+                    description: 'Node.js / Python with Databases',
+                    learn: ['Node.js', 'Express.js', 'MongoDB', 'API Development'],
+                    prerequisites: ['Basic programming knowledge'],
+                    status: 'active'
+                },
+                {
+                    name: 'Full Stack Development',
+                    category: 'development',
+                    duration: '5 Months',
+                    fee: 90000,
+                    language: 'en',
+                    description: 'Complete web development course',
+                    learn: ['Frontend Development', 'Backend Development', 'Database Design', 'Deployment'],
+                    prerequisites: ['Basic computer knowledge'],
+                    status: 'active'
+                },
+                {
+                    name: 'Computer Basics',
+                    category: 'basics',
+                    duration: '1 Month',
+                    fee: 20000,
+                    language: 'ha',
+                    description: 'Complete beginner computer course',
+                    learn: ['Microsoft Office', 'Internet Basics', 'Email', 'File Management'],
+                    prerequisites: ['None'],
+                    status: 'active'
+                }
+            ];
+            
+            await Course.insertMany(courses);
+            console.log('✅ Sample courses created');
+        }
+        
+        // Check if testimonials exist
+        const testimonialCount = await Testimonial.countDocuments();
+        if (testimonialCount === 0) {
+            const testimonials = [
+                {
+                    name: 'Sarah Johnson',
+                    position: 'Frontend Developer',
+                    message: 'The practical approach helped me land my first developer job within 2 months of completing the course!',
+                    avatar: 'https://randomuser.me/api/portraits/women/32.jpg',
+                    rating: 5,
+                    isApproved: true
+                },
+                {
+                    name: 'Ahmed Musa',
+                    position: 'Freelance Web Developer',
+                    message: 'Learning in Hausa made everything click for me. Now I\'m building websites for local businesses.',
+                    avatar: 'https://randomuser.me/api/portraits/men/54.jpg',
+                    rating: 5,
+                    isApproved: true
+                }
+            ];
+            
+            await Testimonial.insertMany(testimonials);
+            console.log('✅ Sample testimonials created');
+        }
+        
+    } catch (error) {
+        console.error('Error seeding data:', error);
+    }
+}
+
 // ================== START SERVER ==================
 
 async function startServer() {
@@ -258,12 +615,21 @@ async function startServer() {
         // Create first admin if none exists
         await createFirstAdmin();
         
+        // Seed initial data
+        await seedInitialData();
+        
         // Start the server
         app.listen(PORT, () => {
             console.log(`🚀 Server running on http://localhost:${PORT}`);
             console.log(`👑 Admin panel: http://localhost:${PORT}/admin`);
-            console.log(`📨 Contact API: http://localhost:${PORT}/api/contact`);
-            console.log(`📚 Courses API: http://localhost:${PORT}/api/courses`);
+            console.log(`📨 Contact API: POST http://localhost:${PORT}/api/contact`);
+            console.log(`📚 Courses API: GET http://localhost:${PORT}/api/courses`);
+            console.log(`🎓 Students API: POST http://localhost:${PORT}/api/enroll`);
+            console.log(`📰 Newsletter: POST http://localhost:${PORT}/api/newsletter/subscribe`);
+            console.log(`⭐ Testimonials: GET http://localhost:${PORT}/api/testimonials`);
+            console.log(`📅 Schedule: GET http://localhost:${PORT}/api/schedule`);
+            console.log(`💳 Payment: POST http://localhost:${PORT}/api/payment/create`);
+            console.log(`💚 Health Check: GET http://localhost:${PORT}/api/health`);
         });
     } catch (error) {
         console.error('❌ Failed to start server:', error);
