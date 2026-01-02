@@ -5,7 +5,21 @@ const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require('bcrypt');
-const cors = require('cors'); // ADD THIS
+
+const cors = require('cors');
+// Replace with your actual GitHub Pages URL
+const allowedOrigins = ['  https://codesmartng.github.io/software-training/index.html '];
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 require('dotenv').config(); // ADD THIS
 
 // Register MongoDB adapter
