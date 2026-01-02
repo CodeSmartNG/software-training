@@ -1,11 +1,15 @@
-// script.js - UPDATED VERSION WITH COMPLETE BACKEND INTEGRATION
-const BACKEND_URL = ' https://codesmartng.github.io/software-training/index.html '; // Your backend URL
-const phone = "2348160932630";
-let quizScore = { frontend: 0, backend: 0, fullstack: 0 };
-
-// ================= API HELPER FUNCTIONS =================
+// TEMPORARY FIX - Use this while deploying your backend
+const USE_MOCK_DATA = true; // Set to false after deploying backend
+const BACKEND_URL = USE_MOCK_DATA ? '' : 'https://your-backend-url.com/api';
 
 async function callAPI(endpoint, method = 'GET', data = null) {
+    // If using mock data, return fake successful responses
+    if (USE_MOCK_DATA) {
+        console.log('Using mock data for', endpoint);
+        return mockAPIResponse(endpoint, method, data);
+    }
+    
+    // Your original fetch code here...
     try {
         const options = {
             method,
@@ -15,8 +19,6 @@ async function callAPI(endpoint, method = 'GET', data = null) {
         if (data && (method === 'POST' || method === 'PUT')) {
             options.body = JSON.stringify(data);
         }
-        
-        console.log(`📡 API Call: ${method} ${BACKEND_URL}${endpoint}`, data || '');
         
         const response = await fetch(`${BACKEND_URL}${endpoint}`, options);
         const result = await response.json();
@@ -29,6 +31,44 @@ async function callAPI(endpoint, method = 'GET', data = null) {
     } catch (error) {
         console.error(`❌ API Error (${endpoint}):`, error);
         throw error;
+    }
+}
+
+function mockAPIResponse(endpoint, method, data) {
+    // Return mock responses for all API calls
+    switch(endpoint) {
+        case '/contact':
+            if (method === 'POST') {
+                alert('Thank you! Your message has been received. We\'ll contact you soon.');
+                return { success: true, message: 'Message received (mock)' };
+            }
+            break;
+        case '/courses':
+            return {
+                success: true,
+                data: [
+                    { name: 'Frontend Development', fee: 50000 },
+                    { name: 'Backend Development', fee: 40000 },
+                    { name: 'Full Stack Development', fee: 90000 },
+                    { name: 'Computer Basics', fee: 20000 }
+                ]
+            };
+        case '/testimonials':
+            return {
+                success: true,
+                data: [
+                    {
+                        name: 'Sarah Johnson',
+                        position: 'Frontend Developer',
+                        message: 'The practical approach helped me land my first developer job!',
+                        rating: 5
+                    }
+                ]
+            };
+        case '/health':
+            return { status: 'OK', timestamp: new Date() };
+        default:
+            return { success: true, message: 'Mock response' };
     }
 }
 
