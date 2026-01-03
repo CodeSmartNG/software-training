@@ -1,6 +1,10 @@
-// TEMPORARY FIX - Use this while deploying your backend
-const USE_MOCK_DATA = true; // Set to false after deploying backend
-const BACKEND_URL = USE_MOCK_DATA ? '' : ' https://codesmartng.onrender.com ';
+// ================= CONFIGURATION =================
+const USE_MOCK_DATA = true; // Set to false when your backend is live
+const BACKEND_URL = USE_MOCK_DATA ? '' : 'https://codesmartng.onrender.com/api';
+const phone = "2348160932630";
+let quizScore = { frontend: 0, backend: 0, fullstack: 0 };
+
+// ================= API HELPER FUNCTIONS =================
 
 async function callAPI(endpoint, method = 'GET', data = null) {
     // If using mock data, return fake successful responses
@@ -9,7 +13,7 @@ async function callAPI(endpoint, method = 'GET', data = null) {
         return mockAPIResponse(endpoint, method, data);
     }
     
-    // Your original fetch code here...
+    // Real API call when backend is live
     try {
         const options = {
             method,
@@ -39,7 +43,8 @@ function mockAPIResponse(endpoint, method, data) {
     switch(endpoint) {
         case '/contact':
             if (method === 'POST') {
-                alert('Thank you! Your message has been received. We\'ll contact you soon.');
+                // Show success message
+                showNotification('Thank you! Your message has been received. We\'ll contact you soon.', 'success');
                 return { success: true, message: 'Message received (mock)' };
             }
             break;
@@ -62,6 +67,33 @@ function mockAPIResponse(endpoint, method, data) {
                         position: 'Frontend Developer',
                         message: 'The practical approach helped me land my first developer job!',
                         rating: 5
+                    },
+                    {
+                        name: 'Ahmed Musa',
+                        position: 'Freelance Web Developer',
+                        message: 'Learning in Hausa made everything click for me.',
+                        rating: 5
+                    },
+                    {
+                        name: 'Michael Adebayo',
+                        position: 'Full Stack Developer',
+                        message: 'Best decision I made for my career transition.',
+                        rating: 5
+                    }
+                ]
+            };
+        case '/schedule':
+            return {
+                success: true,
+                data: [
+                    {
+                        id: 1,
+                        course: "Frontend Development",
+                        date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+                        time: "10:00 AM - 1:00 PM (Mon, Wed, Fri)",
+                        instructor: "Musa Ahmed",
+                        mode: "Online (Live)",
+                        seatsLeft: 10
                     }
                 ]
             };
@@ -398,7 +430,7 @@ function initializeScheduleToggle() {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.schedule-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            loadSchedule(); // Reload schedule on toggle
+            loadSchedule();
         });
     });
 }
@@ -412,10 +444,7 @@ async function registerWebinar() {
     if (!email) return;
     
     try {
-        // For now, just show success message
-        // In future, connect to backend
         showNotification(`Thank you ${name}! We've sent webinar details to ${email}.`, 'success');
-        
     } catch (error) {
         showNotification('Failed to register for webinar. Please try again.', 'error');
     }
@@ -440,7 +469,7 @@ async function loadTestimonials() {
                     </div>
                 </div>
                 <div class="testimonial-author">
-                    <img src="${testimonial.avatar}" alt="${testimonial.name}">
+                    <img src="${testimonial.avatar || 'https://randomuser.me/api/portraits/men/32.jpg'}" alt="${testimonial.name}">
                     <div>
                         <h4>${testimonial.name}</h4>
                         <p>${testimonial.position}</p>
@@ -460,14 +489,11 @@ async function loadCourses() {
         const response = await callAPI('/courses');
         const courses = response.data;
         
-        console.log('Loaded courses:', courses);
-        
         // Update course prices dynamically
         courses.forEach(course => {
             const courseName = course.name;
             const fee = course.fee;
             
-            // Find and update corresponding course cards
             document.querySelectorAll('.training-card').forEach(card => {
                 const cardTitle = card.querySelector('h3').textContent;
                 if (cardTitle.includes(courseName) || courseName.includes(cardTitle)) {
@@ -514,9 +540,6 @@ function initializeContactForm() {
     const contactForm = document.getElementById('contactForm');
     if (!contactForm) return;
     
-    // Remove inline event listener if exists
-    contactForm.onsubmit = null;
-    
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -534,7 +557,6 @@ function initializeContactForm() {
             // Send to backend
             await callAPI('/contact', 'POST', data);
             
-            showNotification('Thank you! Your message has been sent successfully.', 'success');
             this.reset();
             
         } catch (error) {
@@ -549,6 +571,11 @@ function initializeContactForm() {
 
 // ================= TEST BACKEND CONNECTION =================
 async function testBackendConnection() {
+    if (USE_MOCK_DATA) {
+        console.log('Using mock data - skipping backend connection test');
+        return true;
+    }
+    
     try {
         const health = await callAPI('/health');
         console.log('✅ Backend connection successful:', health);
@@ -562,6 +589,14 @@ async function testBackendConnection() {
 
 // ================= LOAD ALL DATA FROM BACKEND =================
 async function loadAllData() {
+    if (USE_MOCK_DATA) {
+        // Load mock data immediately
+        await loadCourses();
+        await loadTestimonials();
+        await loadSchedule();
+        return;
+    }
+    
     const isConnected = await testBackendConnection();
     if (!isConnected) return;
     
@@ -578,6 +613,23 @@ async function loadAllData() {
     }
 }
 
+// ================= VIEW CERTIFICATE =================
+function viewCertificate() {
+    window.open('https://www.canva.com/design/DAG9NFTRqFQ/Y5HQbCdXFTYkXGkMImg4ig/view', '_blank');
+}
+
+// ================= VIDEO PLAYER =================
+function playVideo(videoId) {
+    showNotification('Video playback would start here', 'info');
+}
+
+// ================= ANIMATION HELPERS =================
+function addAnimationClasses() {
+    document.querySelectorAll('.training-card, .service-card, .portfolio-item, .resource-card').forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+}
+
 // ================= INITIALIZE EVERYTHING =================
 async function initializeEverything() {
     // Core functionality
@@ -592,28 +644,23 @@ async function initializeEverything() {
     initializeNewsletter();
     initializeContactForm();
     
-    // Load data from backend
+    // Load data
     await loadAllData();
     
     // Add animation classes
     addAnimationClasses();
 }
 
-// ================= ANIMATION HELPERS =================
-function addAnimationClasses() {
-    document.querySelectorAll('.training-card, .service-card, .portfolio-item, .resource-card').forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-}
-
 // ================= ON LOAD =================
 window.addEventListener('load', function() {
     initializeEverything();
     
-    // Check backend health
-    setTimeout(() => {
-        testBackendConnection();
-    }, 1000);
+    // Check backend health (only if not using mock data)
+    if (!USE_MOCK_DATA) {
+        setTimeout(() => {
+            testBackendConnection();
+        }, 1000);
+    }
     
     // Remove preloader if exists
     const preloader = document.querySelector('.preloader');
