@@ -1,6 +1,6 @@
 // TEMPORARY FIX - Use this while deploying your backend
 const USE_MOCK_DATA = true; // Set to false after deploying backend
-const BACKEND_URL = USE_MOCK_DATA ? '' : ' https://software-training.onrender.com ';
+const BACKEND_URL = USE_MOCK_DATA ? '' : ' https://codesmartng.onrender.com ';
 
 async function callAPI(endpoint, method = 'GET', data = null) {
     // If using mock data, return fake successful responses
