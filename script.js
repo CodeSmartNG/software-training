@@ -1,5 +1,5 @@
 // ================= CONFIGURATION =================
-const USE_MOCK_DATA = true; // Set to false when your backend is live
+const USE_MOCK_DATA = false; // Set to false when your backend is live
 const BACKEND_URL = USE_MOCK_DATA ? '' : 'https://codesmartng.onrender.com/api';
 const phone = "2348160932630";
 let quizScore = { frontend: 0, backend: 0, fullstack: 0 };
