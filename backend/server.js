@@ -1,26 +1,13 @@
-// server.js - UPDATED VERSION WITH MORE FEATURES
+
+// server.js - UPDATED AND CORRECTED VERSION
 const express = require('express');
 const mongoose = require('mongoose');
 const AdminJS = require('adminjs');
 const AdminJSExpress = require('@adminjs/express');
 const AdminJSMongoose = require('@adminjs/mongoose');
 const bcrypt = require('bcrypt');
-
 const cors = require('cors');
-// Replace with your actual GitHub Pages URL
-const allowedOrigins = ['  https://codesmartng.github.io/software-training/index.html '];
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, Postman)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}));
-require('dotenv').config(); // ADD THIS
+require('dotenv').config();
 
 // Register MongoDB adapter
 AdminJS.registerAdapter(AdminJSMongoose);
@@ -30,8 +17,24 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ================== CORS MIDDLEWARE ==================
+// Allow your live GitHub Pages site and local development
+const allowedOrigins = [
+    'https://codesmartng.github.io',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'http://localhost:5500'
+];
+
 app.use(cors({
-    origin: ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://localhost:5500'],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, Postman)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     credentials: true
 }));
 
@@ -77,7 +80,7 @@ const CourseSchema = new mongoose.Schema({
 });
 const Course = mongoose.model('Course', CourseSchema);
 
-// 4. NEW: Student Enrollment Model
+// 4. Student Enrollment Model
 const StudentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -91,7 +94,7 @@ const StudentSchema = new mongoose.Schema({
 });
 const Student = mongoose.model('Student', StudentSchema);
 
-// 5. NEW: Newsletter Subscription Model
+// 5. Newsletter Subscription Model
 const NewsletterSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     subscribedAt: { type: Date, default: Date.now },
@@ -99,7 +102,7 @@ const NewsletterSchema = new mongoose.Schema({
 });
 const Newsletter = mongoose.model('Newsletter', NewsletterSchema);
 
-// 6. NEW: Testimonial Model
+// 6. Testimonial Model
 const TestimonialSchema = new mongoose.Schema({
     name: { type: String, required: true },
     position: String,
@@ -117,7 +120,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ================== API ROUTES ==================
 
-// 1. Contact Form API (Already working)
+// 1. Contact Form API
 app.post('/api/contact', async (req, res) => {
     try {
         const newMessage = new Message({
@@ -156,7 +159,7 @@ app.get('/api/courses', async (req, res) => {
     }
 });
 
-// 3. NEW: Student Enrollment API
+// 3. Student Enrollment API
 app.post('/api/enroll', async (req, res) => {
     try {
         const { name, email, phone, course, paymentReference, amountPaid } = req.body;
@@ -186,7 +189,7 @@ app.post('/api/enroll', async (req, res) => {
     }
 });
 
-// 4. NEW: Newsletter Subscription API
+// 4. Newsletter Subscription API
 app.post('/api/newsletter/subscribe', async (req, res) => {
     try {
         const { email } = req.body;
@@ -216,7 +219,7 @@ app.post('/api/newsletter/subscribe', async (req, res) => {
     }
 });
 
-// 5. NEW: Testimonials API
+// 5. Testimonials API
 app.get('/api/testimonials', async (req, res) => {
     try {
         const testimonials = await Testimonial.find({ isApproved: true })
@@ -231,7 +234,7 @@ app.get('/api/testimonials', async (req, res) => {
     }
 });
 
-// 6. NEW: Schedule API (Return class schedules)
+// 6. Schedule API (Return class schedules)
 app.get('/api/schedule', async (req, res) => {
     try {
         const schedule = [
@@ -273,7 +276,7 @@ app.get('/api/schedule', async (req, res) => {
     }
 });
 
-// 7. NEW: Payment initialization API (for Paystack)
+// 7. Payment initialization API (for Paystack)
 app.post('/api/payment/create', async (req, res) => {
     try {
         const { amount, course, email, name } = req.body;
@@ -299,7 +302,7 @@ app.post('/api/payment/create', async (req, res) => {
     }
 });
 
-// 8. NEW: Health check endpoint
+// 8. Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'OK', 
@@ -309,7 +312,7 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-// 9. NEW: Get contact messages (for testing)
+// 9. Get contact messages (for testing)
 app.get('/api/messages', async (req, res) => {
     try {
         const messages = await Message.find().sort({ date: -1 });
@@ -319,7 +322,7 @@ app.get('/api/messages', async (req, res) => {
     }
 });
 
-// 10. NEW: Get enrollment stats
+// 10. Get enrollment stats
 app.get('/api/stats', async (req, res) => {
     try {
         const totalStudents = await Student.countDocuments();
