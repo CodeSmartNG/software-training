@@ -14,8 +14,8 @@
   "@adminjs/mongoose": "^3.0.0",
   "bcrypt": "^5.1.0",
   "dotenv": "^16.0.3",
-  "tslib": "^2.6.0",    // This was missing
-  "cors": "^2.8.5"      // Also critical for your frontend to connect
+  "tslib": "^2.6.0",    
+  "cors": "^2.8.5"  
 },
   "devDependencies": {
     "nodemon": "^3.0.0"
